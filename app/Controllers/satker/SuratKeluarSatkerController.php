@@ -1,0 +1,214 @@
+<?php
+
+namespace App\Controllers\Satker;
+
+use App\Controllers\BaseController;
+use App\Models\SuratMasukModel;
+use App\Models\SuratKeluarModel;
+
+class SuratKeluarSatkerController extends BaseController
+{
+    protected $suratMasukModel;
+    protected $suratKeluarModel;
+
+    public function __construct()
+    {
+        $this->suratMasukModel = new SuratMasukModel();
+        $this->suratKeluarModel = new SuratKeluarModel();
+    }
+    public function index()
+    {
+        
+        $session = session();
+        $data['user'] = $session->get('nama');
+        $data['level'] = $session->get('level');
+        $suratMasukModel = new SuratMasukModel();
+        $data['jumlahBelumDibaca'] = $suratMasukModel->where('status', 0)
+                                                     ->where('tujuan_surat', 'Satker')
+                                                     ->countAllResults();
+        $suratKeluarModel = new SuratKeluarModel();
+        $data['surat_keluar'] = $suratKeluarModel->getSuratKeluarWithStatus();
+        return view('satker/surat_keluar/index', $data);
+    }
+    public function edit($id)
+    {
+        $data['surat_keluar'] = $this->suratKeluarModel->find($id);
+        $data['surat_masuk'] = $this->suratMasukModel->findAll();
+        if (!$data['surat_keluar']) {
+            throw \CodeIgniter\Exceptions\PageNotFoundException::forPageNotFound('Surat Keluar tidak ditemukan');
+        }
+        return view('satker/surat_keluar/edit', $data);
+    }
+    public function update($id)
+{
+    $validation = \Config\Services::validation();
+
+    $validation->setRules([
+        'asal_surat' => 'required|max_length[255]',
+        'no_surat' => 'required|max_length[100]',
+        'perihal' => 'required|max_length[255]',
+        'tanggal_terima' => 'required|valid_date',
+        'jenis_surat' => 'required|max_length[255]',
+        'file_surat' => 'uploaded[file_surat]|max_size[file_surat,2048]|ext_in[file_surat,pdf,doc,docx]',
+    ]);
+
+    if (!$validation->withRequest($this->request)->run()) {
+        return redirect()->back()->withInput()->with('errors', $validation->getErrors());
+    }
+
+    // Handle file upload
+    $file = $this->request->getFile('file_surat');
+    $fileName = $this->request->getPost('current_file_surat');
+    if ($file->isValid() && !$file->hasMoved()) {
+        // Remove old file
+        if ($fileName && file_exists(WRITEPATH . 'uploads/' . $fileName)) {
+            unlink(WRITEPATH . 'uploads/' . $fileName);
+        }
+        $fileName = $file->getRandomName();
+        $file->move(WRITEPATH . 'uploads', $fileName);
+    }
+
+    // Update surat_keluar
+    $suratKeluarData = [
+        'asal_surat' => $this->request->getPost('asal_surat'),
+        'no_surat' => $this->request->getPost('no_surat'),
+        'perihal' => $this->request->getPost('perihal'),
+        'tanggal_terima' => $this->request->getPost('tanggal_terima'),
+        'jenis_surat' => $this->request->getPost('jenis_surat'),
+        'file_surat' => $fileName,
+        'id_surat_masuk' => $this->request->getPost('id_surat_masuk')
+    ];
+
+    if ($this->suratKeluarModel->update($id, $suratKeluarData)) {
+        return redirect()->to('/satker/surat_keluar')->with('success', 'Data berhasil diperbarui.');
+    } else {
+        return redirect()->back()->with('error', 'Gagal memperbarui data surat keluar.');
+    }
+}
+
+
+    // Tampilkan form untuk menambahkan surat keluar baru
+    public function createSuratKeluar()
+    {
+        $data['surat_masuk'] = $this->suratMasukModel->findAll();
+        return view('satker/surat_keluar/create', $data);
+    }
+
+    // Simpan surat keluar baru
+    public function storeSuratKeluar()
+    {
+        $validation = \Config\Services::validation();
+    
+        $validation->setRules([
+            'asal_surat' => 'required|max_length[255]',
+            'perihal' => 'required|max_length[255]',
+            'tanggal_terima' => 'required|valid_date',
+            'jenis_surat' => 'required|max_length[255]',
+            'file_surat' => 'uploaded[file_surat]|max_size[file_surat,2048]|ext_in[file_surat,pdf,doc,docx]',
+        ]);
+    
+        if (!$validation->withRequest($this->request)->run()) {
+            return redirect()->back()->withInput()->with('errors', $validation->getErrors());
+        }
+    
+        // Generate nomor surat
+        $noSurat = $this->generateNoSurat();
+    
+        // Handle file upload
+        $file = $this->request->getFile('file_surat');
+        $fileName = null;
+        if ($file->isValid() && !$file->hasMoved()) {
+            $fileName = $file->getRandomName();
+            $file->move(WRITEPATH . 'uploads', $fileName);
+        }
+    
+        // Save to surat_masuk
+        $suratMasukData = [
+            'asal_surat' => $this->request->getPost('asal_surat'),
+            'no_surat' => $noSurat,
+            'jenis_surat' => $this->request->getPost('jenis_surat'),
+            'perihal' => $this->request->getPost('perihal'),
+            'tanggal_terima' => $this->request->getPost('tanggal_terima'),
+            'file_surat' => $fileName,
+            'tujuan_surat' => 'Satker', // Tujuan surat default ke 'Satker'
+        ];
+    
+        if (!$this->suratMasukModel->save($suratMasukData)) {
+            return redirect()->back()->with('error', 'Gagal menyimpan data ke surat_masuk.');
+        }
+    
+        // Get the ID of the newly inserted surat_masuk
+        $id_surat_masuk = $this->suratMasukModel->getInsertID();
+    
+        // Save to surat_keluar
+        $suratKeluarData = [
+            'asal_surat' => $this->request->getPost('asal_surat'),
+            'no_surat' => $noSurat,
+            'perihal' => $this->request->getPost('perihal'),
+            'tanggal_terima' => $this->request->getPost('tanggal_terima'),
+            'tujuan_surat' => 'Satker', // Tujuan surat default ke 'Satker'
+            'jenis_surat' => $this->request->getPost('jenis_surat'),
+            'file_surat' => $fileName,
+            'id_surat_masuk' => $id_surat_masuk
+        ];
+    
+        if ($this->suratKeluarModel->save($suratKeluarData)) {
+            return redirect()->to('/satker/surat_keluar')->with('success', 'Data berhasil disimpan.');
+        } else {
+            return redirect()->back()->with('error', 'Gagal menyimpan data ke surat_keluar.');
+        }
+    }
+    
+
+    // Generate nomor surat
+    private function generateNoSurat()
+    {
+        $tahun = date('Y'); // Contoh format tahun
+        $bulan = date('m'); // Contoh format bulan
+
+        // Ambil nomor urut terakhir
+        $lastNoSurat = $this->suratMasukModel->orderBy('id_surat', 'DESC')->first();
+
+        // Generate nomor urut baru
+        $nomorUrut = 1;
+        if ($lastNoSurat) {
+            // Ambil nomor urut dari no_surat yang terakhir
+            preg_match('/(\d+)/', $lastNoSurat['no_surat'], $matches);
+            $nomorUrut = $matches[0] + 1;
+        }
+
+        // Format nomor surat
+        $noSurat = sprintf('%s/%03d/%s/%s', 'VI', $nomorUrut, 'A', 'VIII');
+        return $noSurat;
+    }
+
+    public function delete($id)
+{
+    $suratKeluar = $this->suratKeluarModel->find($id);
+    if (!$suratKeluar) {
+        throw \CodeIgniter\Exceptions\PageNotFoundException::forPageNotFound('Surat Keluar tidak ditemukan');
+    }
+
+    // Hapus file jika ada
+    if ($suratKeluar['file_surat'] && file_exists(WRITEPATH . 'uploads/' . $suratKeluar['file_surat'])) {
+        unlink(WRITEPATH . 'uploads/' . $suratKeluar['file_surat']);
+    }
+
+    if ($this->suratKeluarModel->delete($id)) {
+        return redirect()->to('/satker/surat_keluar')->with('success', 'Data berhasil dihapus.');
+    } else {
+        return redirect()->back()->with('error', 'Gagal menghapus data surat keluar.');
+    }
+}
+
+public function show($id)
+    {
+        $data['surat_keluar'] = $this->suratKeluarModel->find($id);
+
+        if (!$data['surat_keluar']) {
+            throw \CodeIgniter\Exceptions\PageNotFoundException::forPageNotFound('Surat Keluar tidak ditemukan');
+        }
+
+        return view('satker/surat_keluar/show', $data);
+    }
+}
