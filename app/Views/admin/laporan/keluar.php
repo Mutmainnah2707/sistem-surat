@@ -42,7 +42,7 @@
                                 <td><?= esc($item['tujuan_surat']) ?></td>
                                 <td><?= esc($item['jenis_surat']) ?></td>
                                 <td>
-                                    <?= $item['status'] == 0 ? 'Belum Dibaca' : 'Sudah Dibaca' ?>
+                                    <?= $item['is_draft'] ? 'Draft' : 'Terkirim' ?>
                                 </td>
                                 <td>
                                     <?php if (!empty($item['file_surat'])): ?>

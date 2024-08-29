@@ -4,24 +4,17 @@
 <div class="container-fluid">
     <h3>Tambah Disposisi</h3>
 
-    <form action="<?= site_url('admin/disposisi/store') ?>" method="post">
+    <form action="<?= site_url('admin/disposisi/store' .esc($suratMasuk['id_surat'])) ?>" method="post" enctype="multipart/form-data">
         <?= csrf_field() ?>
 
         <div class="form-group">
             <label for="id_surat_masuk">Pilih Surat Masuk</label>
-            <select class="form-control" id="id_surat_masuk" name="id_surat_masuk" required>
-                <option value="">-- Pilih Surat Masuk --</option>
-                <?php foreach ($suratMasukList as $surat): ?>
-                    <option value="<?= esc($surat['id_surat']) ?>">
-                        <?= esc($surat['no_surat']) ?> - <?= esc($surat['asal_surat']) ?>
-                    </option>
-                <?php endforeach; ?>
-            </select>
+            <input type="text" class="form-control" id="id_surat_masuk" name="id_surat_masuk" value="<?= esc($suratMasuk['no_surat']) . " - " . esc($suratMasuk['asal_surat']) ?>" readonly required>
         </div>
 
         <div class="form-group">
             <label for="tanggal_disposisi">Tanggal Disposisi</label>
-            <input type="date" class="form-control" id="tanggal_disposisi" name="tanggal_disposisi" required>
+            <input type="date" class="form-control" id="tanggal_disposisi" name="tanggal_disposisi" value="<?= date('Y-m-d') ?>" required>
         </div>
 
         <div class="form-group">
@@ -38,6 +31,11 @@
         <div class="form-group">
             <label for="keterangan">Keterangan</label>
             <textarea class="form-control" id="keterangan" name="keterangan" rows="3" required></textarea>
+        </div>
+
+        <div class="form-group">
+            <label for="file_surat">Unggah File Surat</label>
+            <input type="file" class="form-control-file" id="file_surat" name="file_surat" required>
         </div>
 
         <button type="submit" class="btn btn-primary">Simpan</button>

@@ -51,7 +51,7 @@
                                 <td><?= esc($admin['level']) ?></td>
                                 <td>
                                     <a href="<?= site_url('admin/edit-admin/' . $admin['id']) ?>" class="btn btn-warning btn-sm">Edit</a>
-                                    <a href="#" class="btn btn-danger btn-sm" onclick="confirmDelete('<?= site_url('admin/delete/' . $admin['id']) ?>')">Delete</a>
+                                    <a href="#" class="btn btn-danger btn-sm" onclick="confirmDelete('<?= site_url('admin/delete-admin/' . $admin['id']) ?>')">Delete</a>
                                 </td>
                             </tr>
                             <?php endforeach; ?>

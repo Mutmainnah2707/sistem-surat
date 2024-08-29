@@ -30,8 +30,13 @@
                 </div>
 
                 <div class="form-group">
+                    <label for="tanggal_surat">Tanggal Surat</label>
+                    <input type="date" name="tanggal_surat" class="form-control" id="tanggal_surat" value="<?= date('Y-m-d') ?>" required>
+                </div>
+
+                <div class="form-group">
                     <label for="tanggal_terima">Tanggal Terima</label>
-                    <input type="date" name="tanggal_terima" class="form-control" id="tanggal_terima" value="<?= old('tanggal_terima') ?>" required>
+                    <input type="date" name="tanggal_terima" class="form-control" id="tanggal_terima" value="<?= date('Y-m-d') ?>" required>
                 </div>
 
                 <div class="form-group">
@@ -40,7 +45,7 @@
                 </div>
 
                 <div class="form-group">
-                    <label for="file_surat">File Surat (Opsional)</label>
+                    <label for="file_surat">File Surat</label>
                     <input type="file" name="file_surat" class="form-control-file" id="file_surat">
                 </div>
 

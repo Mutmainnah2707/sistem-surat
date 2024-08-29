@@ -56,7 +56,7 @@
                     <td><?= esc($item['tanggal_terima']) ?></td>
                     <td><?= esc($item['tujuan_surat']) ?></td>
                     <td><?= esc($item['jenis_surat']) ?></td>
-                    <td><?= $item['status'] == 0 ? 'Belum Dibaca' : 'Sudah Dibaca' ?></td>
+                    <td><?= $item['is_draft'] ? 'Draft' : 'Terkirim' ?></td>
                 </tr>
                 <?php endforeach; ?>
             <?php else: ?>

@@ -11,6 +11,12 @@ class LaporanController extends BaseController
 {
     public function masuk()
     {
+        $session = session();
+        $data['user'] = $session->get('nama');
+        $data['level'] = $session->get('level');
+        $suratMasukModel = new SuratMasukModel();
+        $data['jumlahBelumDibaca'] = $suratMasukModel->where('status', 0)
+                                                     ->countAllResults();
         $suratMasukModel = new SuratMasukModel();
         $data['surat_masuk'] = $suratMasukModel->getAllSuratMasuk();
         
@@ -19,13 +25,22 @@ class LaporanController extends BaseController
 
     public function keluar()
 {
+    $session = session();
+        $data['user'] = $session->get('nama');
+        $data['level'] = $session->get('level');
+        $suratMasukModel = new SuratMasukModel();
+        $data['jumlahBelumDibaca'] = $suratMasukModel->where('status', 0)
+                                                     ->countAllResults();
     $suratKeluarModel = new SuratKeluarModel();
+    $data['surat_keluar'] = $suratKeluarModel->findAll();
     
     // Melakukan join antara surat_keluar dan surat_masuk berdasarkan id_surat
-    $data['surat_keluar'] = $suratKeluarModel
-        ->select('surat_keluar.*, surat_masuk.status') // Pilih semua dari surat_keluar dan status dari surat_masuk
-        ->join('surat_masuk', 'surat_masuk.id_surat = surat_keluar.id_surat') // Join tabel
-        ->findAll();
+    // $data['surat_keluar'] = $suratKeluarModel
+    //     ->select('surat_keluar.*, surat_masuk.status') // Pilih semua dari surat_keluar dan status dari surat_masuk
+    //     ->join('surat_masuk', 'surat_masuk.id_surat = surat_keluar.id_surat') // Join tabel
+    //     ->findAll();
+
+    // dd($data);
 
     return view('admin/laporan/keluar', $data);
 }

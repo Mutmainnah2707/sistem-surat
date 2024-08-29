@@ -20,9 +20,8 @@
             <!-- Sidebar - Brand -->
             <a class="sidebar-brand d-flex align-items-center justify-content-center" href="<?= site_url('/') ?>">
                 <div class="sidebar-brand-icon">
-                <img src="<?= base_url('logo/logo1.jpeg') ?>" alt="Logo" style="max-width: 100px; height: auto;">
+                <img src="<?= base_url('logo/logo1.png') ?>" alt="Logo" style="max-width: 100px; height: auto;">
                 </div>
-                <div class="sidebar-brand-text mx-3">Surat</div>
             </a>
             <hr class="sidebar-divider my-0">
 
@@ -116,23 +115,23 @@
 
                         <!-- Nav Item - User Information -->
                         <li class="nav-item dropdown no-arrow">
-                            <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                <span class="mr-2 d-none d-lg-inline text-gray-600 small"><?= esc(session()->get('username')) ?></span>
-                                <img class="img-profile rounded-circle" src="<?= base_url('assetAdmin/img/undraw_profile.svg') ?>">
-                            </a>
-                            <!-- Dropdown - User Information -->
-                            <div class="dropdown-menu dropdown-menu-right shadow animated--grow-in" aria-labelledby="userDropdown">
-                                <a class="dropdown-item" href="<?= site_url('profile') ?>">
-                                    <i class="fas fa-user fa-sm fa-fw mr-2 text-gray-400"></i>
-                                    Profile
-                                </a>
-                                <div class="dropdown-divider"></div>
-                                <a class="dropdown-item" href="<?= site_url('auth/logout') ?>">
-                                    <i class="fas fa-sign-out-alt fa-sm fa-fw mr-2 text-gray-400"></i>
-                                    Logout
-                                </a>
-                            </div>
-                        </li>
+        <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+            <span class="mr-2 d-none d-lg-inline text-gray-600 small"><?= esc($user) ?></span>
+            <img class="img-profile rounded-circle" src="<?= base_url('assetAdmin/img/undraw_profile.svg') ?>">
+        </a>
+        <!-- Dropdown - User Information -->
+        <div class="dropdown-menu dropdown-menu-right shadow animated--grow-in" aria-labelledby="userDropdown">
+            <a class="dropdown-item" href="<?= site_url('settings') ?>">
+                <i class="fas fa-user fa-sm fa-fw mr-2 text-gray-400"></i>
+                Settings
+            </a>
+            <div class="dropdown-divider"></div>
+            <a class="dropdown-item" href="<?= site_url('auth/logout') ?>">
+                <i class="fas fa-sign-out-alt fa-sm fa-fw mr-2 text-gray-400"></i>
+                Logout
+            </a>
+        </div>
+    </li>
 
                     </ul>
                 </nav>
@@ -159,7 +158,7 @@
             <footer class="footer bg-white">
                 <div class="container my-auto">
                     <div class="text-center my-auto">
-                        <span>© 2024 SIKEU</span>
+                        <span>© 2024 Sistem Surat Menyurat UA</span>
                     </div>
                 </div>
             </footer>

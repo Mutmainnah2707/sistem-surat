@@ -6,7 +6,7 @@
 </div>
 
 <div class="container-fluid">
-    <form method="post" action="<?= site_url('pengurus/update/' . $pengurus['id']) ?>">
+    <form method="post" action="<?= site_url('/admin/update-pengurus/' . $pengurus['id']) ?>">
         <?= csrf_field() ?>
         <input type="hidden" name="_method" value="PUT">
 
@@ -21,13 +21,13 @@
         </div>
 
         <div class="form-group">
-            <label for="jabatan">Jabatan:</label>
-            <input type="text" id="jabatan" name="jabatan" class="form-control" value="<?= esc($pengurus['jabatan']) ?>" required>
+            <label for="level">Level:</label>
+            <input type="text" id="level" name="level" class="form-control" value="<?= esc($pengurus['level']) ?>" required>
         </div>
 
         <div class="form-group">
             <button type="submit" class="btn btn-primary">Simpan</button>
-            <a href="<?= site_url('pengurus') ?>" class="btn btn-secondary">Kembali</a>
+            <a href="<?= site_url('admin/list-pengurus') ?>" class="btn btn-secondary">Kembali</a>
         </div>
     </form>
 </div>

@@ -8,6 +8,7 @@
     <link href="<?= base_url('assetAdmin/css/sb-admin-2.min.css') ?>" rel="stylesheet">
     <link href="<?= base_url('assetAdmin/vendor/fontawesome-free/css/all.min.css') ?>" rel="stylesheet" type="text/css">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.min.css">
+
 </head>
 
 <body id="page-top">
@@ -20,10 +21,9 @@
     <!-- Sidebar - Brand -->
     <a class="sidebar-brand d-flex align-items-center justify-content-center" href="<?= site_url('/') ?>">
         <div class="sidebar-brand-icon">
-        <img src="<?= base_url('logo/logo1.jpeg') ?>" alt="Logo" style="max-width: 100px; height: auto;">
+        <img src="<?= base_url('logo/logo1.png') ?>" alt="Logo" style="max-width: 100px; height: auto;">
         <!-- Ganti dengan ikon surat jika perlu -->
         </div>
-        <div class="sidebar-brand-text mx-3">Surat</div>
     </a>
 
     <!-- Divider -->
@@ -178,9 +178,9 @@
         </a>
         <!-- Dropdown - User Information -->
         <div class="dropdown-menu dropdown-menu-right shadow animated--grow-in" aria-labelledby="userDropdown">
-            <a class="dropdown-item" href="<?= site_url('profile') ?>">
+            <a class="dropdown-item" href="<?= site_url('settings') ?>">
                 <i class="fas fa-user fa-sm fa-fw mr-2 text-gray-400"></i>
-                Profile
+                Settings
             </a>
             <div class="dropdown-divider"></div>
             <a class="dropdown-item" href="<?= site_url('auth/logout') ?>">
@@ -275,7 +275,7 @@
             <footer class="footer bg-white">
                 <div class="container my-auto">
                     <div class="text-center my-auto">
-                        <span>© 2024 SIKEU</span>
+                        <span>© 2024 Sistem Surat Menyurat UA</span>
                     </div>
                 </div>
             </footer>

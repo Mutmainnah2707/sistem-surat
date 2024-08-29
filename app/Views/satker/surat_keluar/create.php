@@ -1,4 +1,4 @@
-<?= $this->extend('dashboard/index') ?>
+<?= $this->extend('dashboard/satker') ?>
 
 <?= $this->section('content') ?>
 <div class="page-heading">
@@ -29,6 +29,7 @@
     <?php endif; ?>
 
     <form action="<?= site_url('satker/surat_keluar') ?>" method="post" enctype="multipart/form-data">
+        <?= csrf_field() ?>
         <div class="card shadow mb-4">
             <div class="card-header py-3">
                 <h6 class="m-0 font-weight-bold text-primary">Form Surat Keluar</h6>
@@ -58,6 +59,7 @@
                     <select class="form-control" id="tujuan_surat" name="tujuan_surat" required>
                         <option value="">Pilih Tujuan</option>
                         <option value="Satker" <?= old('tujuan_surat') === 'Satker' ? 'selected' : '' ?>>Satker</option>
+                        <option value="Pimpinan Pondok" <?= old('tujuan_surat') === 'Pimpinan Pondok' ? 'selected' : '' ?>>Pimpinan Pondok</option>
                     </select>
                 </div>
                 <!-- Form Row 4 -->
@@ -70,8 +72,24 @@
                     <label for="file_surat">File Surat</label>
                     <input type="file" class="form-control" id="file_surat" name="file_surat" required>
                 </div>
+                <!-- Form Row 6 (Draft Option) -->
+                <div class="form-group">
+                    <label>Status Surat</label>
+                    <div class="form-check">
+                        <input class="form-check-input" type="radio" name="is_draft" id="draft" value="1" <?= old('is_draft') === '1' || old('is_draft') === null ? 'checked' : '' ?>>
+                        <label class="form-check-label" for="draft">
+                            Draft
+                        </label>
+                    </div>
+                    <div class="form-check">
+                        <input class="form-check-input" type="radio" name="is_draft" id="not_draft" value="0" <?= old('is_draft') === '0' ? 'checked' : '' ?>>
+                        <label class="form-check-label" for="not_draft">
+                            Final
+                        </label>
+                    </div>
+                </div>
                 <!-- Submit Button -->
-                <button type="submit" class="btn btn-primary">Simpan</button>
+                <button type="submit" class="btn btn-primary">Kirim</button>
             </div>
         </div>
     </form>

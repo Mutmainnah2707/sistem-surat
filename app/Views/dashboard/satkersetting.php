@@ -143,7 +143,7 @@
             <footer class="footer bg-white">
                 <div class="container my-auto">
                     <div class="text-center my-auto">
-                        <span>© 2024 SIKEU</span>
+                        <span>© 2024 Sistem Surat Menyurat UA</span>
                     </div>
                 </div>
             </footer>

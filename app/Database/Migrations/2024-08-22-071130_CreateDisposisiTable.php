@@ -28,6 +28,10 @@ class CreateDisposisiTable extends Migration
                 'type' => 'TEXT',
                 'null' => false,
             ],
+            'file_disposisi' => [
+                'type'       => 'VARCHAR',
+                'constraint' => 255,
+            ],
         ]);
 
         // Membuat foreign key untuk id_surat_masuk

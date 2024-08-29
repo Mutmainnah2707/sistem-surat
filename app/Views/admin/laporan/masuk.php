@@ -40,7 +40,7 @@
                                 <td><?= esc($item['tanggal_terima']) ?></td>
                                 <td><?= esc($item['tujuan_surat']) ?></td>
                                 <td>
-                                    <?= $item['status'] == 0 ? 'Belum Dibaca' : 'Sudah Dibaca' ?>
+                                    <?= $item['status'] ? 'Sudah Dibaca' : 'Belum Dibaca' ?>
                                 </td>
                                 <td>
                                     <?php if (!empty($item['file_surat'])): ?>

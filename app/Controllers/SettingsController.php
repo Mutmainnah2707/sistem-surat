@@ -6,9 +6,35 @@ use App\Models\UserModel;
 class SettingsController extends Controller
 {
     public function index()
-    {
-        return view('settings');
+{
+    $session = session();
+    $data['user'] = $session->get('nama');
+    $data['level'] = $session->get('level');
+
+    $suratMasukModel = new \App\Models\SuratMasukModel();
+
+    if ($data['level'] === 'admin') {
+        // Jika level pengguna adalah admin, hitung semua surat yang belum dibaca tanpa memfilter 'tujuan_surat'
+        $data['jumlahBelumDibaca'] = $suratMasukModel->where('status', 0)
+                                                     ->countAllResults();
+    } else {
+        // Tentukan tujuan surat berdasarkan level pengguna selain admin
+        $tujuanSurat = '';
+        if ($data['level'] === 'satker') {
+            $tujuanSurat = 'Satker';
+        } elseif ($data['level'] === 'pengurus') {
+            $tujuanSurat = 'Pimpinan Pondok';
+        }
+
+        // Hitung jumlah surat belum dibaca berdasarkan tujuan surat yang sesuai dengan level pengguna
+        $data['jumlahBelumDibaca'] = $suratMasukModel->where('status', 0)
+                                                     ->where('tujuan_surat', $tujuanSurat)
+                                                     ->countAllResults();
     }
+
+    return view('settings', $data);
+}
+
 
     public function updatePassword()
     {

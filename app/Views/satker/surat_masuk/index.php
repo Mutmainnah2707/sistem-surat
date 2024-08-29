@@ -6,7 +6,6 @@
 </div>
 
 <div class="container-fluid">
-    <a href="<?= site_url('satker/surat_masuk/create') ?>" class="btn btn-primary mb-3">Tambah Surat Masuk</a>
     
     <div class="card shadow mb-4">
         <div class="card-header py-3">
@@ -43,7 +42,6 @@
                                 </td>
                                 <td>
                                     <a href="<?= site_url('satker/surat_masuk/' . $item['id_surat']) ?>" class="btn btn-info btn-sm">Show</a>
-                                    <a href="<?= site_url('satker/surat_masuk/' . $item['id_surat'] . '/edit') ?>" class="btn btn-warning btn-sm">Edit</a>
                                     <a href="#" class="btn btn-danger btn-sm" onclick="confirmDelete('<?= site_url('satker/surat_masuk/' . $item['id_surat']) ?>')">Delete</a>
 
                                 </td>

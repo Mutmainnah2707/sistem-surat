@@ -27,6 +27,9 @@ class CreateSuratMasukTable extends Migration
                 'type'       => 'VARCHAR',
                 'constraint' => 250,
             ],
+            'tanggal_surat' => [
+                'type' => 'DATE',
+            ],
             'tanggal_terima' => [
                 'type' => 'DATE',
             ],

@@ -23,13 +23,27 @@ class SuratController extends BaseController
     // Surat Masuk
     public function suratMasuk()
     {
+        $session = session();
+        $data['user'] = $session->get('nama');
+        $data['level'] = $session->get('level');
+        $suratMasukModel = new SuratMasukModel();
+        $data['jumlahBelumDibaca'] = $suratMasukModel->where('status', 0)
+                                                     ->countAllResults();
         $data['surat_masuk'] = $this->suratMasukModel->findAll();
         return view('surat/surat_masuk', $data);
     }
 
     public function createSuratMasuk()
     {
-        return view('surat/create_surat_masuk');
+        $session = session();
+        $data['user'] = $session->get('nama');
+        $data['level'] = $session->get('level');
+        $suratMasukModel = new SuratMasukModel();
+        $data['jumlahBelumDibaca'] = $suratMasukModel->where('status', 0)
+                                                     ->countAllResults();
+        $data['surat_masuk'] = $this->suratMasukModel->findAll();
+        
+        return view('surat/create_surat_masuk', $data);
     }
 
     public function storeSuratMasuk()
@@ -40,6 +54,7 @@ class SuratController extends BaseController
         'asal_surat' => 'required|max_length[255]',
         'no_surat' => 'required|max_length[255]', // Jika nomor surat tidak otomatis
         'perihal' => 'required|max_length[255]',
+        'tanggal_surat' => 'required|valid_date',
         'tanggal_terima' => 'required|valid_date',
         'tujuan_surat' => 'required|max_length[255]',
         'file_surat' => 'uploaded[file_surat]|max_size[file_surat,2048]|ext_in[file_surat,pdf,doc,docx]',
@@ -63,6 +78,7 @@ class SuratController extends BaseController
         'asal_surat' => $this->request->getPost('asal_surat'),
         'no_surat' => $this->request->getPost('no_surat'), // Pastikan data ini sesuai
         'perihal' => $this->request->getPost('perihal'),
+        'tanggal_surat' => $this->request->getPost('tanggal_surat'),
         'tanggal_terima' => $this->request->getPost('tanggal_terima'),
         'tujuan_surat' => $this->request->getPost('tujuan_surat'),
         'file_surat' => $fileName
@@ -79,17 +95,43 @@ class SuratController extends BaseController
 }
 
 
+public function editSuratMasuk($id_surat_masuk)
+{
+    $session = session();
+        $data['user'] = $session->get('nama');
+        $data['level'] = $session->get('level');
+        $suratMasukModel = new SuratMasukModel();
+        $data['jumlahBelumDibaca'] = $suratMasukModel->where('status', 0)
+                                                     ->countAllResults();
 
+    $data['surat_masuk'] = $this->suratMasukModel->find($id_surat_masuk);
+    if (!$data['surat_masuk']) {
+        throw \CodeIgniter\Exceptions\PageNotFoundException::forPageNotFound('Surat Masuk tidak ditemukan');
+    }
+    return view('surat/edit_surat_masuk', $data);
+}
 
     // Surat Keluar
     public function suratKeluar()
     {
+        $session = session();
+        $data['user'] = $session->get('nama');
+        $data['level'] = $session->get('level');
+        $suratMasukModel = new SuratMasukModel();
+        $data['jumlahBelumDibaca'] = $suratMasukModel->where('status', 0)
+                                                     ->countAllResults();
         $data['surat_keluar'] = $this->suratKeluarModel->findAll();
         return view('surat/surat_keluar', $data);
     }
 
     public function createSuratKeluar()
     {
+        $session = session();
+        $data['user'] = $session->get('nama');
+        $data['level'] = $session->get('level');
+        $suratMasukModel = new SuratMasukModel();
+        $data['jumlahBelumDibaca'] = $suratMasukModel->where('status', 0)
+                                                     ->countAllResults();
         $data['surat_masuk'] = $this->suratMasukModel->findAll();
         return view('surat/create_surat_keluar', $data);
     }
@@ -136,7 +178,7 @@ class SuratController extends BaseController
             'perihal' => $this->request->getPost('perihal'),
             'tanggal_terima' => $this->request->getPost('tanggal_terima'),
             'file_surat' => $fileName,
-            'tujuan_surat' => 'Satker',
+            'tujuan_surat' => $this->request->getPost('tujuan_surat'),
         ];
 
         if (!$suratMasukModel->save($suratMasukData)) {
@@ -172,6 +214,12 @@ class SuratController extends BaseController
 // Surat Keluar
 public function editSuratKeluar($id_surat_keluar)
 {
+    $session = session();
+        $data['user'] = $session->get('nama');
+        $data['level'] = $session->get('level');
+        $suratMasukModel = new SuratMasukModel();
+        $data['jumlahBelumDibaca'] = $suratMasukModel->where('status', 0)
+                                                     ->countAllResults();
     $data['surat_keluar'] = $this->suratKeluarModel->find($id_surat_keluar);
     if (!$data['surat_keluar']) {
         throw \CodeIgniter\Exceptions\PageNotFoundException::forPageNotFound('Surat Keluar tidak ditemukan');
@@ -287,6 +335,12 @@ public function updateSuratKeluar($id_surat_keluar)
 
     public function showSuratMasuk($id_surat_masuk)
     {
+        $session = session();
+        $data['user'] = $session->get('nama');
+        $data['level'] = $session->get('level');
+        $suratMasukModel = new SuratMasukModel();
+        $data['jumlahBelumDibaca'] = $suratMasukModel->where('status', 0)
+                                                     ->countAllResults();
         $data['surat_masuk'] = $this->suratMasukModel->find($id_surat_masuk);
 
         if (!$data['surat_masuk']) {
@@ -298,6 +352,12 @@ public function updateSuratKeluar($id_surat_keluar)
 
 public function showSuratKeluar($id_surat_keluar)
 {
+    $session = session();
+        $data['user'] = $session->get('nama');
+        $data['level'] = $session->get('level');
+        $suratMasukModel = new SuratMasukModel();
+        $data['jumlahBelumDibaca'] = $suratMasukModel->where('status', 0)
+                                                     ->countAllResults();
     $data['surat_keluar'] = $this->suratKeluarModel->find($id_surat_keluar);
 
     if (!$data['surat_keluar']) {

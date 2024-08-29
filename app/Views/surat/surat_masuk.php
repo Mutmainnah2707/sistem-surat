@@ -21,8 +21,10 @@
                             <th>Asal Surat</th>
                             <th>No Surat</th>
                             <th>Perihal</th>
+                            <th>Tanggal Surat</th>
                             <th>Tanggal Terima</th>
                             <th>Tujuan Surat</th>
+                            <th>Status</th>
                             <th>Actions</th>
                         </tr>
                     </thead>
@@ -35,11 +37,14 @@
                                 <td><?= esc($item['asal_surat']) ?></td>
                                 <td><?= esc($item['no_surat']) ?></td>
                                 <td><?= esc($item['perihal']) ?></td>
+                                <td><?= esc($item['tanggal_surat']) ?></td>
                                 <td><?= esc($item['tanggal_terima']) ?></td>
                                 <td><?= esc($item['tujuan_surat']) ?></td>
+                                <td><?= esc($item['status']) ? 'Sudah dibaca' : 'Belum dibca' ?></td>
                                 <td>
                                     <a href="<?= site_url('surat/show_surat_masuk/' . $item['id_surat']) ?>" class="btn btn-info btn-sm">Show</a>
                                     <a href="<?= site_url('surat/edit_surat_masuk/' . $item['id_surat']) ?>" class="btn btn-warning btn-sm">Edit</a>
+                                    <a href="<?= site_url('admin/disposisi/create/' . $item['id_surat']) ?>" class="btn btn-primary btn-sm">Disposisi</a>
                                     <a href="#" class="btn btn-danger btn-sm" onclick="confirmDelete('<?= site_url('surat/delete_surat_masuk/' . $item['id_surat']) ?>')">Delete</a>
                                 </td>
                             </tr>

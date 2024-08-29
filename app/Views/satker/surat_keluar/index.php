@@ -6,7 +6,7 @@
 </div>
 
 <div class="container-fluid">
-    <a href="<?= site_url('satker/surat_keluar/create') ?>" class="btn btn-primary mb-3">Tambah Surat Keluar</a>
+    <a href="<?= site_url('surat/create_surat_keluar') ?>" class="btn btn-primary mb-3">Tambah Surat Keluar</a>
     
     <div class="card shadow mb-4">
         <div class="card-header py-3">
@@ -21,9 +21,9 @@
                             <th>Asal Surat</th>
                             <th>No Surat</th>
                             <th>Perihal</th>
-                            <th>Tanggal Keluar</th>
+                            <th>Tanggal Terima</th>
                             <th>Tujuan Surat</th>
-                            <th>Status</th> <!-- New column -->
+                            <th>Status</th>
                             <th>Actions</th>
                         </tr>
                     </thead>
@@ -39,12 +39,14 @@
                                 <td><?= esc($item['tanggal_terima']) ?></td>
                                 <td><?= esc($item['tujuan_surat']) ?></td>
                                 <td>
-                                    <?= $item['status'] == 0 ? 'Belum Dibaca' : 'Sudah Dibaca' ?>
-                                </td> <!-- New data -->
+                                    <?= $item['is_draft'] ? 'Draft' : 'Terkirim' ?>
+                                </td>
                                 <td>
-                                    <a href="<?= site_url('satker/surat_keluar/' . $item['id_surat']) ?>" class="btn btn-info btn-sm">Show</a>
-                                    <a href="<?= site_url('satker/surat_keluar/' . $item['id_surat'] . '/edit') ?>" class="btn btn-warning btn-sm">Edit</a>
-                                    <a href="#" class="btn btn-danger btn-sm" onclick="confirmDelete('<?= site_url('satker/surat_keluar/' . $item['id_surat']) ?>')">Delete</a>
+                                    <a href="<?= site_url('surat/show_surat_keluar/' . $item['id_surat']) ?>" class="btn btn-info btn-sm">Show</a>
+                                    <?php if ($item['is_draft']): ?>
+                                        <a href="<?= site_url('surat/edit_surat_keluar/' . $item['id_surat']) ?>" class="btn btn-warning btn-sm">Edit</a>
+                                    <?php endif; ?>
+                                    <a href="#" class="btn btn-danger btn-sm" onclick="confirmDelete('<?= site_url('surat/delete_surat_keluar/' . $item['id_surat']) ?>')">Delete</a>
                                 </td>
                             </tr>
                             <?php endforeach; ?>

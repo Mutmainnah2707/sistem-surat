@@ -61,14 +61,19 @@ $routes->get('/admin/edit-satker/(:num)', 'AdminController::editSatker/$1');
 $routes->post('/admin/update-satker/(:num)', 'AdminController::updateSatker/$1');
 
 $routes->get('/admin/edit-pengurus/(:num)', 'AdminController::editPengurus/$1');
-$routes->post('/admin/update-pengurus/(:num)', 'AdminController::updatePengurus/$1');
+$routes->put('/admin/update-pengurus/(:num)', 'AdminController::updatePengurus/$1');
+
+$routes->get('admin/delete-admin/(:num)', 'AdminController::deleteAdmin/$1');
+$routes->get('admin/delete-satker/(:num)', 'AdminController::deleteSatker/$1');
+$routes->get('admin/delete-pengurus/(:num)', 'AdminController::deletePengurus/$1');
+
 
 $routes->get('admin/disposisi', 'DisposisiController::index');
-$routes->get('admin/disposisi/create/', 'DisposisiController::create/$1');
-$routes->post('admin/disposisi/store', 'DisposisiController::store');    
+$routes->get('admin/disposisi/create/(:num)', 'DisposisiController::create/$1');
+$routes->post('admin/disposisi/store(:num)', 'DisposisiController::store/$1');
 $routes->get('admin/disposisi/edit/(:num)', 'DisposisiController::edit/$1');
 $routes->post('admin/disposisi/update/(:num)', 'DisposisiController::update/$1'); 
-$routes->get('admin/disposisi/delete/(:num)', 'DisposisiController::delete/$1'); 
+$routes->get('admin/disposisi/delete/(:num)', 'DisposisiController::delete/$1');
 
 $routes->get('surat/show_surat_masuk/(:num)', 'SuratController::showSuratMasuk/$1');
 

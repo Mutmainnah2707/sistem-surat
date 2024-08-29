@@ -20,10 +20,10 @@
     <!-- Sidebar - Brand -->
     <a class="sidebar-brand d-flex align-items-center justify-content-center" href="<?= site_url('/') ?>">
         <div class="sidebar-brand-icon">
-        <img src="<?= base_url('logo/logo1.jpeg') ?>" alt="Logo" style="max-width: 100px; height: auto;">
+        <img src="<?= base_url('logo/logo1.png') ?>" alt="Logo" style="max-width: 100px; height: auto;">
         <!-- Ganti dengan ikon surat jika perlu -->
         </div>
-        <div class="sidebar-brand-text mx-3">Surat</div>
+        <div class="sidebar-brand-text mx-3"></div>
     </a>
 
     <!-- Divider -->
@@ -145,6 +145,32 @@
 <!-- Topbar Navbar -->
 <ul class="navbar-nav ml-auto">
 
+<li class="nav-item dropdown no-arrow mx-1">
+        <a class="nav-link dropdown-toggle" href="#" id="alertsDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+            <i class="fas fa-bell fa-fw"></i>
+            <!-- Counter - Alerts -->
+            <?php if ($jumlahBelumDibaca > 0): ?>
+                <span class="badge badge-danger badge-counter"><?= $jumlahBelumDibaca ?></span>
+            <?php endif; ?>
+        </a>
+        <!-- Dropdown - Alerts -->
+        <div class="dropdown-list dropdown-menu dropdown-menu-right shadow animated--grow-in" aria-labelledby="alertsDropdown">
+            <h6 class="dropdown-header">
+                Surat Masuk Belum Dibaca
+            </h6>
+            <a class="dropdown-item d-flex align-items-center" href="<?= site_url('surat/surat_masuk') ?>">
+                <div class="mr-3">
+                    <div class="icon-circle bg-primary">
+                        <i class="fas fa-envelope text-white"></i>
+                    </div>
+                </div>
+                <div>
+                    <span class="font-weight-bold"><?= $jumlahBelumDibaca ?> Surat Masuk Belum Dibaca</span>
+                </div>
+            </a>
+        </div>
+    </li>
+
     <!-- Nav Item - User Information -->
     <li class="nav-item dropdown no-arrow">
         <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
@@ -191,7 +217,7 @@
             <footer class="footer bg-white">
                 <div class="container my-auto">
                     <div class="text-center my-auto">
-                        <span>© 2024 SIKEU</span>
+                    <span>© 2024 Sistem Surat Menyurat UA</span>
                     </div>
                 </div>
             </footer>

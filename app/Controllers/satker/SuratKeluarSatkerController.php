@@ -90,6 +90,13 @@ class SuratKeluarSatkerController extends BaseController
     // Tampilkan form untuk menambahkan surat keluar baru
     public function createSuratKeluar()
     {
+        $session = session();
+        $data['user'] = $session->get('nama');
+        $data['level'] = $session->get('level');
+        $suratMasukModel = new SuratMasukModel();
+        $data['jumlahBelumDibaca'] = $suratMasukModel->where('status', 0)
+                                                     ->where('tujuan_surat', 'Satker')
+                                                     ->countAllResults();
         $data['surat_masuk'] = $this->suratMasukModel->findAll();
         return view('satker/surat_keluar/create', $data);
     }
@@ -98,31 +105,38 @@ class SuratKeluarSatkerController extends BaseController
     public function storeSuratKeluar()
     {
         $validation = \Config\Services::validation();
-    
-        $validation->setRules([
-            'asal_surat' => 'required|max_length[255]',
-            'perihal' => 'required|max_length[255]',
-            'tanggal_terima' => 'required|valid_date',
-            'jenis_surat' => 'required|max_length[255]',
-            'file_surat' => 'uploaded[file_surat]|max_size[file_surat,2048]|ext_in[file_surat,pdf,doc,docx]',
-        ]);
-    
-        if (!$validation->withRequest($this->request)->run()) {
-            return redirect()->back()->withInput()->with('errors', $validation->getErrors());
-        }
-    
-        // Generate nomor surat
-        $noSurat = $this->generateNoSurat();
-    
-        // Handle file upload
-        $file = $this->request->getFile('file_surat');
-        $fileName = null;
-        if ($file->isValid() && !$file->hasMoved()) {
-            $fileName = $file->getRandomName();
-            $file->move(WRITEPATH . 'uploads', $fileName);
-        }
-    
-        // Save to surat_masuk
+
+    $validation->setRules([
+        'asal_surat' => 'required|max_length[255]',
+        'perihal' => 'required|max_length[255]',
+        'tanggal_terima' => 'required|valid_date',
+        'tujuan_surat' => 'required|max_length[255]',
+        'jenis_surat' => 'required|max_length[255]',
+        'file_surat' => 'uploaded[file_surat]|max_size[file_surat,2048]|ext_in[file_surat,pdf,doc,docx]',
+    ]);
+
+    if (!$validation->withRequest($this->request)->run()) {
+        return redirect()->back()->withInput()->with('errors', $validation->getErrors());
+    }
+
+    // Generate nomor surat
+    $noSurat = $this->generateNoSurat();
+
+    // Handle file upload
+    $file = $this->request->getFile('file_surat');
+    $fileName = null;
+    if ($file->isValid() && !$file->hasMoved()) {
+        $fileName = $file->getRandomName();
+        $file->move(WRITEPATH . 'uploads', $fileName);
+    }
+
+    // Tentukan apakah surat disimpan sebagai draft atau final
+    $isDraft = $this->request->getPost('is_draft') ? 1 : 0;
+
+    // Jika bukan draft, simpan data ke tabel surat_masuk
+    $id_surat_masuk = null;
+    if (!$isDraft) {
+        $suratMasukModel = new SuratMasukModel();
         $suratMasukData = [
             'asal_surat' => $this->request->getPost('asal_surat'),
             'no_surat' => $noSurat,
@@ -130,33 +144,36 @@ class SuratKeluarSatkerController extends BaseController
             'perihal' => $this->request->getPost('perihal'),
             'tanggal_terima' => $this->request->getPost('tanggal_terima'),
             'file_surat' => $fileName,
-            'tujuan_surat' => 'Satker', // Tujuan surat default ke 'Satker'
+            'tujuan_surat' => 'Satker',
         ];
-    
-        if (!$this->suratMasukModel->save($suratMasukData)) {
+
+        if (!$suratMasukModel->save($suratMasukData)) {
             return redirect()->back()->with('error', 'Gagal menyimpan data ke surat_masuk.');
         }
-    
-        // Get the ID of the newly inserted surat_masuk
-        $id_surat_masuk = $this->suratMasukModel->getInsertID();
-    
-        // Save to surat_keluar
-        $suratKeluarData = [
-            'asal_surat' => $this->request->getPost('asal_surat'),
-            'no_surat' => $noSurat,
-            'perihal' => $this->request->getPost('perihal'),
-            'tanggal_terima' => $this->request->getPost('tanggal_terima'),
-            'tujuan_surat' => 'Satker', // Tujuan surat default ke 'Satker'
-            'jenis_surat' => $this->request->getPost('jenis_surat'),
-            'file_surat' => $fileName,
-            'id_surat_masuk' => $id_surat_masuk
-        ];
-    
-        if ($this->suratKeluarModel->save($suratKeluarData)) {
-            return redirect()->to('/satker/surat_keluar')->with('success', 'Data berhasil disimpan.');
-        } else {
-            return redirect()->back()->with('error', 'Gagal menyimpan data ke surat_keluar.');
-        }
+
+        // Dapatkan ID dari surat_masuk yang baru disimpan
+        $id_surat_masuk = $suratMasukModel->getInsertID();
+    }
+
+    // Simpan data ke tabel surat_keluar
+    $suratKeluarModel = new SuratKeluarModel();
+    $suratKeluarData = [
+        'asal_surat' => $this->request->getPost('asal_surat'),
+        'no_surat' => $noSurat,
+        'perihal' => $this->request->getPost('perihal'),
+        'tanggal_terima' => $this->request->getPost('tanggal_terima'),
+        'tujuan_surat' => $this->request->getPost('tujuan_surat'),
+        'jenis_surat' => $this->request->getPost('jenis_surat'),
+        'file_surat' => $fileName,
+        'id_surat_masuk' => $id_surat_masuk,
+        'is_draft' => $isDraft
+    ];
+
+    if ($suratKeluarModel->save($suratKeluarData)) {
+        return redirect()->to('/satker/surat_keluar')->with('success', 'Data berhasil disimpan.');
+    } else {
+        return redirect()->back()->with('error', 'Gagal menyimpan data ke surat_keluar.');
+    }
     }
     
 
