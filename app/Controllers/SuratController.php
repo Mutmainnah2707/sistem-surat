@@ -368,13 +368,14 @@ class SuratController extends BaseController
             throw \CodeIgniter\Exceptions\PageNotFoundException::forPageNotFound('Surat Keluar tidak ditemukan');
         }
 
-        $filePath = WRITEPATH . 'uploads/' . $data['surat_keluar']['file_surat'];
-        $fileInfo = pathinfo($filePath);
+        $filePath = WRITEPATH . 'uploads/' . $data['surat_keluar']['file_surat']; // Get nama file surat yang ada di database tabel surat keluar
+        $fileInfo = pathinfo($filePath); // Get extensi file surat
         $data['fileExtension'] = strtolower($fileInfo['extension']);
 
         return view('surat/show_surat_keluar', $data);
     }
 
+    // Fungsi untuk menampilkan file PDF yang ada di folder "/writable/uploads"
     public function viewPdf($filename)
     {
         $path = WRITEPATH . 'uploads/' . $filename;
