@@ -33,13 +33,13 @@
                     <p><?= esc($surat['tujuan_surat']) ?></p>
                 </div>
                 <div class="col-md-6">
-    <strong>File Surat:</strong>
-    <?php if (!empty($surat['file_surat'])): ?>
-        <a href="<?= site_url('download/' . esc($surat['file_surat'])) ?>" target="_blank">Download</a>
-    <?php else: ?>
-        <p>Tidak ada file</p>
-    <?php endif; ?>
-</div>
+                    <strong>File Surat:</strong>
+                    <?php if (!empty($surat['file_surat'])): ?>
+                        <a href="<?= site_url('download/' . esc($surat['file_surat'])) ?>" target="_blank">Download</a>
+                    <?php else: ?>
+                        <p>Tidak ada file</p>
+                    <?php endif; ?>
+                </div>
 
             </div>
             <a href="<?= site_url('satker/surat_masuk') ?>" class="btn btn-primary mt-3">Kembali</a>

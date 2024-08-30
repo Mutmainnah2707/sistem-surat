@@ -1,11 +1,12 @@
 <?= $this->extend('dashboard/index') ?>
 
 <?= $this->section('content') ?>
-<div class="page-heading">
-    <h3>Daftar Satker</h3>
-</div>
 
 <div class="container-fluid">
+    <div class="page-heading mb-3">
+        <h3>Daftar Satker</h3>
+    </div>
+    
     <?php if (session()->getFlashdata('errors')): ?>
         <div class="alert alert-danger">
             <ul>

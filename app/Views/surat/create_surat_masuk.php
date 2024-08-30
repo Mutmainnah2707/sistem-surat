@@ -41,7 +41,22 @@
 
                 <div class="form-group">
                     <label for="tujuan_surat">Tujuan Surat</label>
-                    <input type="text" name="tujuan_surat" class="form-control" id="tujuan_surat" value="<?= old('tujuan_surat') ?>" required>
+                    <select class="form-control" id="tujuan_surat" name="tujuan_surat" required>
+                    <option value="">-- Pilih Tujuan Surat --</option>
+                    <option value="Rektor">Rektor</option>
+                    <option value="Rektor">WR1</option>
+                    <option value="Rektor">WR2</option>
+                    <option value="Rektor">WR3</option>
+                    <option value="Rektor">WR4</option>
+                    <option value="Satker">Satker LPPM</option>
+                    <option value="Satker">Satker Fakultas Teknik</option>
+                    <option value="Satker">Satker Fakultas MIPA</option>
+                    <option value="Satker">Satker Fakultas Syari'ah dan ES</option>
+                    <option value="Satker">Satker Fakultas Tarbiyah</option>
+                    <option value="Satker">Satker Fakultas Ushuluddin</option>
+                    <option value="Pimpinan Pondok">Satker Fakultas IKBIS</option>
+                    <option value="Semua">Semua</option>
+                </select>
                 </div>
 
                 <div class="form-group">

@@ -59,7 +59,7 @@
                     <select class="form-control" id="tujuan_surat" name="tujuan_surat" required>
                         <option value="">Pilih Tujuan</option>
                         <option value="Satker" <?= old('tujuan_surat') === 'Satker' ? 'selected' : '' ?>>Satker</option>
-                        <option value="Pimpinan Pondok" <?= old('tujuan_surat') === 'Pimpinan Pondok' ? 'selected' : '' ?>>Pimpinan Pondok</option>
+                        <option value="Pimpinan Pondok" <?= old('tujuan_surat') === 'Pimpinan Pondok' ? 'selected' : '' ?>>Pengurus Pondok</option>
                     </select>
                 </div>
                 <!-- Form Row 4 -->

@@ -1,11 +1,12 @@
 <?= $this->extend('dashboard/index') ?>
 
 <?= $this->section('content') ?>
-<div class="page-heading">
-    <h3>Laporan Surat Masuk</h3>
-</div>
 
 <div class="container-fluid">
+    <div class="page-heading mb-3">
+        <h3>Laporan Surat Masuk</h3>
+    </div>
+
     <div class="card shadow mb-4">
         <div class="card-header py-3 d-flex justify-content-between align-items-center">
             <h6 class="m-0 font-weight-bold text-primary">Daftar Laporan Surat Masuk</h6>
@@ -32,24 +33,24 @@
                         <?php $i = 0 ?>
                         <?php if (!empty($surat_masuk) && is_array($surat_masuk)): ?>
                             <?php foreach ($surat_masuk as $item): ?>
-                            <tr>
-                                <td><?= ++$i ?></td>
-                                <td><?= esc($item['asal_surat']) ?></td>
-                                <td><?= esc($item['no_surat']) ?></td>
-                                <td><?= esc($item['perihal']) ?></td>
-                                <td><?= esc($item['tanggal_terima']) ?></td>
-                                <td><?= esc($item['tujuan_surat']) ?></td>
-                                <td>
-                                    <?= $item['status'] ? 'Sudah Dibaca' : 'Belum Dibaca' ?>
-                                </td>
-                                <td>
-                                    <?php if (!empty($item['file_surat'])): ?>
-                                        <a href="<?= base_url('download/' . esc($item['file_surat'])) ?>">Download File</a>
-                                    <?php else: ?>
-                                        Tidak Ada File
-                                    <?php endif; ?>
-                                </td>
-                            </tr>
+                                <tr>
+                                    <td><?= ++$i ?></td>
+                                    <td><?= esc($item['asal_surat']) ?></td>
+                                    <td><?= esc($item['no_surat']) ?></td>
+                                    <td><?= esc($item['perihal']) ?></td>
+                                    <td><?= esc($item['tanggal_terima']) ?></td>
+                                    <td><?= esc($item['tujuan_surat']) ?></td>
+                                    <td>
+                                        <?= $item['status'] ? 'Sudah Dibaca' : 'Belum Dibaca' ?>
+                                    </td>
+                                    <td>
+                                        <?php if (!empty($item['file_surat'])): ?>
+                                            <a href="<?= base_url('download/' . esc($item['file_surat'])) ?>">Download File</a>
+                                        <?php else: ?>
+                                            Tidak Ada File
+                                        <?php endif; ?>
+                                    </td>
+                                </tr>
                             <?php endforeach; ?>
                         <?php else: ?>
                             <tr>

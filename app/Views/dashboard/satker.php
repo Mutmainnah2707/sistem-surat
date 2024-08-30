@@ -96,52 +96,52 @@
                     <!-- Topbar Navbar -->
                     <ul class="navbar-nav ml-auto">
                         <!-- Nav Item - Alerts -->
-    <li class="nav-item dropdown no-arrow mx-1">
-        <a class="nav-link dropdown-toggle" href="#" id="alertsDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-            <i class="fas fa-bell fa-fw"></i>
-            <!-- Counter - Alerts -->
-            <?php if ($jumlahBelumDibaca > 0): ?>
-                <span class="badge badge-danger badge-counter"><?= $jumlahBelumDibaca ?></span>
-            <?php endif; ?>
-        </a>
-        <!-- Dropdown - Alerts -->
-        <div class="dropdown-list dropdown-menu dropdown-menu-right shadow animated--grow-in" aria-labelledby="alertsDropdown">
-            <h6 class="dropdown-header">
-                Surat Masuk Belum Dibaca
-            </h6>
-            <a class="dropdown-item d-flex align-items-center" href="<?= site_url('/satker/surat_masuk') ?>">
-                <div class="mr-3">
-                    <div class="icon-circle bg-primary">
-                        <i class="fas fa-envelope text-white"></i>
-                    </div>
-                </div>
-                <div>
-                    <span class="font-weight-bold"><?= $jumlahBelumDibaca ?> Surat Masuk Belum Dibaca</span>
-                </div>
-            </a>
-        </div>
-    </li>
-                   
+                        <li class="nav-item dropdown no-arrow mx-1">
+                            <a class="nav-link dropdown-toggle" href="#" id="alertsDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                <i class="fas fa-bell fa-fw"></i>
+                                <!-- Counter - Alerts -->
+                                <?php if ($jumlahBelumDibaca > 0): ?>
+                                    <span class="badge badge-danger badge-counter"><?= $jumlahBelumDibaca ?></span>
+                                <?php endif; ?>
+                            </a>
+                            <!-- Dropdown - Alerts -->
+                            <div class="dropdown-list dropdown-menu dropdown-menu-right shadow animated--grow-in" aria-labelledby="alertsDropdown">
+                                <h6 class="dropdown-header">
+                                    Surat Masuk Belum Dibaca
+                                </h6>
+                                <a class="dropdown-item d-flex align-items-center" href="<?= site_url('/satker/surat_masuk') ?>">
+                                    <div class="mr-3">
+                                        <div class="icon-circle bg-primary">
+                                            <i class="fas fa-envelope text-white"></i>
+                                        </div>
+                                    </div>
+                                    <div>
+                                        <span class="font-weight-bold"><?= $jumlahBelumDibaca ?> Surat Masuk Belum Dibaca</span>
+                                    </div>
+                                </a>
+                            </div>
+                        </li>
 
-    <li class="nav-item dropdown no-arrow">
-        <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-            <span class="mr-2 d-none d-lg-inline text-gray-600 small"><?= esc($user) ?></span>
-            <img class="img-profile rounded-circle" src="<?= base_url('assetAdmin/img/undraw_profile.svg') ?>">
-        </a>
-        <!-- Dropdown - User Information -->
-        <div class="dropdown-menu dropdown-menu-right shadow animated--grow-in" aria-labelledby="userDropdown">
-            <a class="dropdown-item" href="<?= site_url('settings') ?>">
-                <i class="fas fa-user fa-sm fa-fw mr-2 text-gray-400"></i>
-                Settings
-            </a>
-            <div class="dropdown-divider"></div>
-            <a class="dropdown-item" href="<?= site_url('auth/logout') ?>">
-                <i class="fas fa-sign-out-alt fa-sm fa-fw mr-2 text-gray-400"></i>
-                Logout
-            </a>
-        </div>
-    </li>
-                        
+
+                        <li class="nav-item dropdown no-arrow">
+                            <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                <span class="mr-2 d-none d-lg-inline text-gray-600 small"><?= esc($user) ?></span>
+                                <img class="img-profile rounded-circle" src="<?= base_url('assetAdmin/img/undraw_profile.svg') ?>">
+                            </a>
+                            <!-- Dropdown - User Information -->
+                            <div class="dropdown-menu dropdown-menu-right shadow animated--grow-in" aria-labelledby="userDropdown">
+                                <a class="dropdown-item" href="<?= site_url('settings') ?>">
+                                    <i class="fas fa-user fa-sm fa-fw mr-2 text-gray-400"></i>
+                                    Settings
+                                </a>
+                                <div class="dropdown-divider"></div>
+                                <a class="dropdown-item" href="<?= site_url('auth/logout') ?>">
+                                    <i class="fas fa-sign-out-alt fa-sm fa-fw mr-2 text-gray-400"></i>
+                                    Logout
+                                </a>
+                            </div>
+                        </li>
+
 
                     </ul>
                 </nav>
@@ -151,7 +151,7 @@
                 <div class="container-fluid">
 
                     <!-- Page Heading -->
-                    
+
 
                     <!-- Content Row -->
                     <div class="row">

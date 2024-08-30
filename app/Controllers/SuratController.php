@@ -47,69 +47,69 @@ class SuratController extends BaseController
     }
 
     public function storeSuratMasuk()
-{
-    $validation = \Config\Services::validation();
+    {
+        $validation = \Config\Services::validation();
 
-    $validation->setRules([
-        'asal_surat' => 'required|max_length[255]',
-        'no_surat' => 'required|max_length[255]', // Jika nomor surat tidak otomatis
-        'perihal' => 'required|max_length[255]',
-        'tanggal_surat' => 'required|valid_date',
-        'tanggal_terima' => 'required|valid_date',
-        'tujuan_surat' => 'required|max_length[255]',
-        'file_surat' => 'uploaded[file_surat]|max_size[file_surat,2048]|ext_in[file_surat,pdf,doc,docx]',
-    ]);
+        $validation->setRules([
+            'asal_surat' => 'required|max_length[255]',
+            'no_surat' => 'required|max_length[255]', // Jika nomor surat tidak otomatis
+            'perihal' => 'required|max_length[255]',
+            'tanggal_surat' => 'required|valid_date',
+            'tanggal_terima' => 'required|valid_date',
+            'tujuan_surat' => 'required|max_length[255]',
+            'file_surat' => 'uploaded[file_surat]|max_size[file_surat,2048]|ext_in[file_surat,pdf,doc,docx]',
+        ]);
 
-    if (!$validation->withRequest($this->request)->run()) {
-        return redirect()->back()->withInput()->with('errors', $validation->getErrors());
-    }
+        if (!$validation->withRequest($this->request)->run()) {
+            return redirect()->back()->withInput()->with('errors', $validation->getErrors());
+        }
 
-    // Handle file upload
-    $file = $this->request->getFile('file_surat');
-    $fileName = null;
-    if ($file->isValid() && !$file->hasMoved()) {
-        $fileName = $file->getRandomName();
-        $file->move(WRITEPATH . 'uploads', $fileName);
-    }
+        // Handle file upload
+        $file = $this->request->getFile('file_surat');
+        $fileName = null;
+        if ($file->isValid() && !$file->hasMoved()) {
+            $fileName = $file->getRandomName();
+            $file->move(WRITEPATH . 'uploads', $fileName);
+        }
 
-    // Save to surat_masuk
-    $suratMasukModel = new SuratMasukModel();
-    $suratMasukData = [
-        'asal_surat' => $this->request->getPost('asal_surat'),
-        'no_surat' => $this->request->getPost('no_surat'), // Pastikan data ini sesuai
-        'perihal' => $this->request->getPost('perihal'),
-        'tanggal_surat' => $this->request->getPost('tanggal_surat'),
-        'tanggal_terima' => $this->request->getPost('tanggal_terima'),
-        'tujuan_surat' => $this->request->getPost('tujuan_surat'),
-        'file_surat' => $fileName
-    ];
-
-    if (!$suratMasukModel->save($suratMasukData)) {
-        return redirect()->back()->with('error', 'Gagal menyimpan data ke surat_masuk.');
-    }
-
-    // Optionally, perform additional actions if needed
-    // e.g., Logging or related data handling
-
-    return redirect()->to('/surat/surat_masuk')->with('success', 'Data surat masuk berhasil disimpan.');
-}
-
-
-public function editSuratMasuk($id_surat_masuk)
-{
-    $session = session();
-        $data['user'] = $session->get('nama');
-        $data['level'] = $session->get('level');
+        // Save to surat_masuk
         $suratMasukModel = new SuratMasukModel();
-        $data['jumlahBelumDibaca'] = $suratMasukModel->where('status', 0)
-                                                     ->countAllResults();
+        $suratMasukData = [
+            'asal_surat' => $this->request->getPost('asal_surat'),
+            'no_surat' => $this->request->getPost('no_surat'), // Pastikan data ini sesuai
+            'perihal' => $this->request->getPost('perihal'),
+            'tanggal_surat' => $this->request->getPost('tanggal_surat'),
+            'tanggal_terima' => $this->request->getPost('tanggal_terima'),
+            'tujuan_surat' => $this->request->getPost('tujuan_surat'),
+            'file_surat' => $fileName
+        ];
 
-    $data['surat_masuk'] = $this->suratMasukModel->find($id_surat_masuk);
-    if (!$data['surat_masuk']) {
-        throw \CodeIgniter\Exceptions\PageNotFoundException::forPageNotFound('Surat Masuk tidak ditemukan');
+        if (!$suratMasukModel->save($suratMasukData)) {
+            return redirect()->back()->with('error', 'Gagal menyimpan data ke surat_masuk.');
+        }
+
+        // Optionally, perform additional actions if needed
+        // e.g., Logging or related data handling
+
+        return redirect()->to('/surat/surat_masuk')->with('success', 'Data surat masuk berhasil disimpan.');
     }
-    return view('surat/edit_surat_masuk', $data);
-}
+
+
+    public function editSuratMasuk($id_surat_masuk)
+    {
+        $session = session();
+            $data['user'] = $session->get('nama');
+            $data['level'] = $session->get('level');
+            $suratMasukModel = new SuratMasukModel();
+            $data['jumlahBelumDibaca'] = $suratMasukModel->where('status', 0)
+                                                        ->countAllResults();
+
+        $data['surat_masuk'] = $this->suratMasukModel->find($id_surat_masuk);
+        if (!$data['surat_masuk']) {
+            throw \CodeIgniter\Exceptions\PageNotFoundException::forPageNotFound('Surat Masuk tidak ditemukan');
+        }
+        return view('surat/edit_surat_masuk', $data);
+    }
 
     // Surat Keluar
     public function suratKeluar()
@@ -137,167 +137,167 @@ public function editSuratMasuk($id_surat_masuk)
     }
 
     public function storeSuratKeluar()
-{
-    $validation = \Config\Services::validation();
+    {
+        $validation = \Config\Services::validation();
 
-    $validation->setRules([
-        'asal_surat' => 'required|max_length[255]',
-        'perihal' => 'required|max_length[255]',
-        'tanggal_terima' => 'required|valid_date',
-        'tujuan_surat' => 'required|max_length[255]',
-        'jenis_surat' => 'required|max_length[255]',
-        'file_surat' => 'uploaded[file_surat]|max_size[file_surat,2048]|ext_in[file_surat,pdf,doc,docx]',
-    ]);
+        $validation->setRules([
+            'asal_surat' => 'required|max_length[255]',
+            'perihal' => 'required|max_length[255]',
+            'tanggal_terima' => 'required|valid_date',
+            'tujuan_surat' => 'required|max_length[255]',
+            'jenis_surat' => 'required|max_length[255]',
+            'file_surat' => 'uploaded[file_surat]|max_size[file_surat,2048]|ext_in[file_surat,pdf,doc,docx]',
+        ]);
 
-    if (!$validation->withRequest($this->request)->run()) {
-        return redirect()->back()->withInput()->with('errors', $validation->getErrors());
-    }
-
-    // Generate nomor surat
-    $noSurat = $this->generateNoSurat();
-
-    // Handle file upload
-    $file = $this->request->getFile('file_surat');
-    $fileName = null;
-    if ($file->isValid() && !$file->hasMoved()) {
-        $fileName = $file->getRandomName();
-        $file->move(WRITEPATH . 'uploads', $fileName);
-    }
-
-    // Tentukan apakah surat disimpan sebagai draft atau final
-    $isDraft = $this->request->getPost('is_draft') ? 1 : 0;
-
-    // Jika bukan draft, simpan data ke tabel surat_masuk
-    $id_surat_masuk = null;
-    if (!$isDraft) {
-        $suratMasukModel = new SuratMasukModel();
-        $suratMasukData = [
-            'asal_surat' => $this->request->getPost('asal_surat'),
-            'no_surat' => $noSurat,
-            'jenis_surat' => $this->request->getPost('jenis_surat'),
-            'perihal' => $this->request->getPost('perihal'),
-            'tanggal_terima' => $this->request->getPost('tanggal_terima'),
-            'file_surat' => $fileName,
-            'tujuan_surat' => $this->request->getPost('tujuan_surat'),
-        ];
-
-        if (!$suratMasukModel->save($suratMasukData)) {
-            return redirect()->back()->with('error', 'Gagal menyimpan data ke surat_masuk.');
+        if (!$validation->withRequest($this->request)->run()) {
+            return redirect()->back()->withInput()->with('errors', $validation->getErrors());
         }
 
-        // Dapatkan ID dari surat_masuk yang baru disimpan
-        $id_surat_masuk = $suratMasukModel->getInsertID();
-    }
+        // Generate nomor surat
+        $noSurat = $this->generateNoSurat();
 
-    // Simpan data ke tabel surat_keluar
-    $suratKeluarModel = new SuratKeluarModel();
-    $suratKeluarData = [
-        'asal_surat' => $this->request->getPost('asal_surat'),
-        'no_surat' => $noSurat,
-        'perihal' => $this->request->getPost('perihal'),
-        'tanggal_terima' => $this->request->getPost('tanggal_terima'),
-        'tujuan_surat' => $this->request->getPost('tujuan_surat'),
-        'jenis_surat' => $this->request->getPost('jenis_surat'),
-        'file_surat' => $fileName,
-        'id_surat_masuk' => $id_surat_masuk,
-        'is_draft' => $isDraft
-    ];
+        // Handle file upload
+        $file = $this->request->getFile('file_surat');
+        $fileName = null;
+        if ($file->isValid() && !$file->hasMoved()) {
+            $fileName = $file->getRandomName();
+            $file->move(WRITEPATH . 'uploads', $fileName);
+        }
 
-    if ($suratKeluarModel->save($suratKeluarData)) {
-        return redirect()->to('/surat/surat_keluar')->with('success', 'Data berhasil disimpan.');
-    } else {
-        return redirect()->back()->with('error', 'Gagal menyimpan data ke surat_keluar.');
-    }
-}
+        // Tentukan apakah surat disimpan sebagai draft atau final
+        $isDraft = $this->request->getPost('is_draft') ? 1 : 0;
 
-
-// Surat Keluar
-public function editSuratKeluar($id_surat_keluar)
-{
-    $session = session();
-        $data['user'] = $session->get('nama');
-        $data['level'] = $session->get('level');
-        $suratMasukModel = new SuratMasukModel();
-        $data['jumlahBelumDibaca'] = $suratMasukModel->where('status', 0)
-                                                     ->countAllResults();
-    $data['surat_keluar'] = $this->suratKeluarModel->find($id_surat_keluar);
-    if (!$data['surat_keluar']) {
-        throw \CodeIgniter\Exceptions\PageNotFoundException::forPageNotFound('Surat Keluar tidak ditemukan');
-    }
-    return view('surat/edit_surat_keluar', $data);
-}
-
-public function updateSuratKeluar($id_surat_keluar)
-{
-    $validation = \Config\Services::validation();
-
-    $validation->setRules([
-        'asal_surat' => 'required|max_length[255]',
-        'perihal' => 'required|max_length[255]',
-        'tanggal_terima' => 'required|valid_date',
-        'tujuan_surat' => 'required|max_length[255]',
-        'jenis_surat' => 'required|max_length[255]',
-        'file_surat' => 'if_exist|uploaded[file_surat]|max_size[file_surat,2048]|ext_in[file_surat,pdf,doc,docx]',
-    ]);
-
-    if (!$validation->withRequest($this->request)->run()) {
-        return redirect()->back()->withInput()->with('errors', $validation->getErrors());
-    }
-
-    // Handle file upload
-    $file = $this->request->getFile('file_surat');
-    $fileName = $this->request->getPost('current_file_surat'); // Use existing file name by default
-
-    if ($file && $file->isValid() && !$file->hasMoved()) {
-        $fileName = $file->getRandomName();
-        $file->move(WRITEPATH . 'uploads', $fileName);
-    }
-
-    // Determine if the letter is a draft
-    $isDraft = $this->request->getPost('is_draft') ? 1 : 0;
-
-    // Update surat_keluar data
-    $suratKeluarData = [
-        'asal_surat' => $this->request->getPost('asal_surat'),
-        'perihal' => $this->request->getPost('perihal'),
-        'tanggal_terima' => $this->request->getPost('tanggal_terima'),
-        'tujuan_surat' => $this->request->getPost('tujuan_surat'),
-        'jenis_surat' => $this->request->getPost('jenis_surat'),
-        'file_surat' => $fileName,
-        'is_draft' => $isDraft
-    ];
-
-    if ($this->suratKeluarModel->update($id_surat_keluar, $suratKeluarData)) {
-        // If not a draft, update surat_masuk table as well
+        // Jika bukan draft, simpan data ke tabel surat_masuk
+        $id_surat_masuk = null;
         if (!$isDraft) {
             $suratMasukModel = new SuratMasukModel();
             $suratMasukData = [
                 'asal_surat' => $this->request->getPost('asal_surat'),
-                'no_surat' => $this->generateNoSurat(), // Optional: Update surat masuk nomor surat if needed
+                'no_surat' => $noSurat,
                 'jenis_surat' => $this->request->getPost('jenis_surat'),
                 'perihal' => $this->request->getPost('perihal'),
                 'tanggal_terima' => $this->request->getPost('tanggal_terima'),
                 'file_surat' => $fileName,
-                'tujuan_surat' => 'Satker'
+                'tujuan_surat' => $this->request->getPost('tujuan_surat'),
             ];
 
-            // Check if surat masuk exists and update it
-            $existingSuratKeluar = $this->suratKeluarModel->find($id_surat_keluar);
-            $id_surat_masuk = $existingSuratKeluar['id_surat_masuk'] ?? null;
-
-            if ($id_surat_masuk) {
-                $suratMasukModel->update($id_surat_masuk, $suratMasukData);
-            } else {
-                // Insert new surat masuk if it doesn't exist
-                $suratMasukModel->save($suratMasukData);
+            if (!$suratMasukModel->save($suratMasukData)) {
+                return redirect()->back()->with('error', 'Gagal menyimpan data ke surat_masuk.');
             }
+
+            // Dapatkan ID dari surat_masuk yang baru disimpan
+            $id_surat_masuk = $suratMasukModel->getInsertID();
         }
 
-        return redirect()->to('/surat/surat_keluar')->with('success', 'Data surat keluar berhasil diperbarui.');
-    } else {
-        return redirect()->back()->with('error', 'Gagal memperbarui data surat keluar.');
+        // Simpan data ke tabel surat_keluar
+        $suratKeluarModel = new SuratKeluarModel();
+        $suratKeluarData = [
+            'asal_surat' => $this->request->getPost('asal_surat'),
+            'no_surat' => $noSurat,
+            'perihal' => $this->request->getPost('perihal'),
+            'tanggal_terima' => $this->request->getPost('tanggal_terima'),
+            'tujuan_surat' => $this->request->getPost('tujuan_surat'),
+            'jenis_surat' => $this->request->getPost('jenis_surat'),
+            'file_surat' => $fileName,
+            'id_surat_masuk' => $id_surat_masuk,
+            'is_draft' => $isDraft
+        ];
+
+        if ($suratKeluarModel->save($suratKeluarData)) {
+            return redirect()->to('/surat/surat_keluar')->with('success', 'Data berhasil disimpan.');
+        } else {
+            return redirect()->back()->with('error', 'Gagal menyimpan data ke surat_keluar.');
+        }
     }
-}
+
+
+    // Surat Keluar
+    public function editSuratKeluar($id_surat_keluar)
+    {
+        $session = session();
+            $data['user'] = $session->get('nama');
+            $data['level'] = $session->get('level');
+            $suratMasukModel = new SuratMasukModel();
+            $data['jumlahBelumDibaca'] = $suratMasukModel->where('status', 0)
+                                                        ->countAllResults();
+        $data['surat_keluar'] = $this->suratKeluarModel->find($id_surat_keluar);
+        if (!$data['surat_keluar']) {
+            throw \CodeIgniter\Exceptions\PageNotFoundException::forPageNotFound('Surat Keluar tidak ditemukan');
+        }
+        return view('surat/edit_surat_keluar', $data);
+    }
+
+    public function updateSuratKeluar($id_surat_keluar)
+    {
+        $validation = \Config\Services::validation();
+
+        $validation->setRules([
+            'asal_surat' => 'required|max_length[255]',
+            'perihal' => 'required|max_length[255]',
+            'tanggal_terima' => 'required|valid_date',
+            'tujuan_surat' => 'required|max_length[255]',
+            'jenis_surat' => 'required|max_length[255]',
+            'file_surat' => 'if_exist|uploaded[file_surat]|max_size[file_surat,2048]|ext_in[file_surat,pdf,doc,docx]',
+        ]);
+
+        if (!$validation->withRequest($this->request)->run()) {
+            return redirect()->back()->withInput()->with('errors', $validation->getErrors());
+        }
+
+        // Handle file upload
+        $file = $this->request->getFile('file_surat');
+        $fileName = $this->request->getPost('current_file_surat'); // Use existing file name by default
+
+        if ($file && $file->isValid() && !$file->hasMoved()) {
+            $fileName = $file->getRandomName();
+            $file->move(WRITEPATH . 'uploads', $fileName);
+        }
+
+        // Determine if the letter is a draft
+        $isDraft = $this->request->getPost('is_draft') ? 1 : 0;
+
+        // Update surat_keluar data
+        $suratKeluarData = [
+            'asal_surat' => $this->request->getPost('asal_surat'),
+            'perihal' => $this->request->getPost('perihal'),
+            'tanggal_terima' => $this->request->getPost('tanggal_terima'),
+            'tujuan_surat' => $this->request->getPost('tujuan_surat'),
+            'jenis_surat' => $this->request->getPost('jenis_surat'),
+            'file_surat' => $fileName,
+            'is_draft' => $isDraft
+        ];
+
+        if ($this->suratKeluarModel->update($id_surat_keluar, $suratKeluarData)) {
+            // If not a draft, update surat_masuk table as well
+            if (!$isDraft) {
+                $suratMasukModel = new SuratMasukModel();
+                $suratMasukData = [
+                    'asal_surat' => $this->request->getPost('asal_surat'),
+                    'no_surat' => $this->generateNoSurat(), // Optional: Update surat masuk nomor surat if needed
+                    'jenis_surat' => $this->request->getPost('jenis_surat'),
+                    'perihal' => $this->request->getPost('perihal'),
+                    'tanggal_terima' => $this->request->getPost('tanggal_terima'),
+                    'file_surat' => $fileName,
+                    'tujuan_surat' => 'Satker'
+                ];
+
+                // Check if surat masuk exists and update it
+                $existingSuratKeluar = $this->suratKeluarModel->find($id_surat_keluar);
+                $id_surat_masuk = $existingSuratKeluar['id_surat_masuk'] ?? null;
+
+                if ($id_surat_masuk) {
+                    $suratMasukModel->update($id_surat_masuk, $suratMasukData);
+                } else {
+                    // Insert new surat masuk if it doesn't exist
+                    $suratMasukModel->save($suratMasukData);
+                }
+            }
+
+            return redirect()->to('/surat/surat_keluar')->with('success', 'Data surat keluar berhasil diperbarui.');
+        } else {
+            return redirect()->back()->with('error', 'Gagal memperbarui data surat keluar.');
+        }
+    }
 
 
 
@@ -346,26 +346,46 @@ public function updateSuratKeluar($id_surat_keluar)
         if (!$data['surat_masuk']) {
             throw \CodeIgniter\Exceptions\PageNotFoundException::forPageNotFound('Surat Masuk tidak ditemukan');
         }
+        
+        $filePath = WRITEPATH . 'uploads/' . $data['surat_masuk']['file_surat'];
+        $fileInfo = pathinfo($filePath);
+        $data['fileExtension'] = strtolower($fileInfo['extension']);
 
         return view('surat/show_surat_masuk', $data);
     }
 
-public function showSuratKeluar($id_surat_keluar)
-{
-    $session = session();
-        $data['user'] = $session->get('nama');
-        $data['level'] = $session->get('level');
-        $suratMasukModel = new SuratMasukModel();
-        $data['jumlahBelumDibaca'] = $suratMasukModel->where('status', 0)
-                                                     ->countAllResults();
-    $data['surat_keluar'] = $this->suratKeluarModel->find($id_surat_keluar);
+    public function showSuratKeluar($id_surat_keluar)
+    {
+        $session = session();
+            $data['user'] = $session->get('nama');
+            $data['level'] = $session->get('level');
+            $suratMasukModel = new SuratMasukModel();
+            $data['jumlahBelumDibaca'] = $suratMasukModel->where('status', 0)
+                                                        ->countAllResults();
+        $data['surat_keluar'] = $this->suratKeluarModel->find($id_surat_keluar);
 
-    if (!$data['surat_keluar']) {
-        throw \CodeIgniter\Exceptions\PageNotFoundException::forPageNotFound('Surat Keluar tidak ditemukan');
+        if (!$data['surat_keluar']) {
+            throw \CodeIgniter\Exceptions\PageNotFoundException::forPageNotFound('Surat Keluar tidak ditemukan');
+        }
+
+        $filePath = WRITEPATH . 'uploads/' . $data['surat_keluar']['file_surat'];
+        $fileInfo = pathinfo($filePath);
+        $data['fileExtension'] = strtolower($fileInfo['extension']);
+
+        return view('surat/show_surat_keluar', $data);
     }
 
-    return view('surat/show_surat_keluar', $data);
-}
+    public function viewPdf($filename)
+    {
+        $path = WRITEPATH . 'uploads/' . $filename;
+
+        if (!file_exists($path)) {
+            throw new \CodeIgniter\Exceptions\PageNotFoundException("File PDF tidak ditemukan: " . $filename);
+        }
+
+        $this->response->setHeader('Content-Type', 'application/pdf');
+        return $this->response->setBody(file_get_contents($path));
+    }
 
     public function profile()
     {

@@ -79,6 +79,8 @@ $routes->get('surat/show_surat_masuk/(:num)', 'SuratController::showSuratMasuk/$
 
 $routes->get('surat/show_surat_keluar/(:num)', 'SuratController::showSuratKeluar/$1');
 
+$routes->get('pdf/(:segment)', 'SuratController::viewPdf/$1');
+
 
 
 $routes->get('/settings', 'SettingsController::index');

@@ -6,7 +6,7 @@
 </div>
 
 <div class="container-fluid">
-    
+
     <div class="card shadow mb-4">
         <div class="card-header py-3">
             <h6 class="m-0 font-weight-bold text-primary">Daftar Surat Masuk</h6>
@@ -30,22 +30,22 @@
                         <?php $i = 0 ?>
                         <?php if (!empty($surat_masuk) && is_array($surat_masuk)): ?>
                             <?php foreach ($surat_masuk as $item): ?>
-                            <tr>
-                                <td><?= ++$i ?></td>
-                                <td><?= esc($item['asal_surat']) ?></td>
-                                <td><?= esc($item['no_surat']) ?></td>
-                                <td><?= esc($item['perihal']) ?></td>
-                                <td><?= esc($item['tanggal_terima']) ?></td>
-                                <td><?= esc($item['tujuan_surat']) ?></td>
-                                <td>
-                                    <?= $item['status'] == 0 ? 'Belum Dibaca' : 'Sudah Dibaca' ?>
-                                </td>
-                                <td>
-                                    <a href="<?= site_url('satker/surat_masuk/' . $item['id_surat']) ?>" class="btn btn-info btn-sm">Show</a>
-                                    <a href="#" class="btn btn-danger btn-sm" onclick="confirmDelete('<?= site_url('satker/surat_masuk/' . $item['id_surat']) ?>')">Delete</a>
+                                <tr>
+                                    <td><?= ++$i ?></td>
+                                    <td><?= esc($item['asal_surat']) ?></td>
+                                    <td><?= esc($item['no_surat']) ?></td>
+                                    <td><?= esc($item['perihal']) ?></td>
+                                    <td><?= esc($item['tanggal_terima']) ?></td>
+                                    <td><?= esc($item['tujuan_surat']) ?></td>
+                                    <td>
+                                        <?= $item['status'] == 0 ? 'Belum Dibaca' : 'Sudah Dibaca' ?>
+                                    </td>
+                                    <td>
+                                        <a href="<?= site_url('satker/surat_masuk/' . $item['id_surat']) ?>" class="btn btn-info btn-sm">Show</a>
+                                        <a href="#" class="btn btn-danger btn-sm" onclick="confirmDelete('<?= site_url('satker/surat_masuk/' . $item['id_surat']) ?>')">Delete</a>
 
-                                </td>
-                            </tr>
+                                    </td>
+                                </tr>
                             <?php endforeach; ?>
                         <?php else: ?>
                             <tr>

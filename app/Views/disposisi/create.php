@@ -4,7 +4,7 @@
 <div class="container-fluid">
     <h3>Tambah Disposisi</h3>
 
-    <form action="<?= site_url('admin/disposisi/store' .esc($suratMasuk['id_surat'])) ?>" method="post" enctype="multipart/form-data">
+    <form action="<?= site_url('admin/disposisi/store' . esc($suratMasuk['id_surat'])) ?>" method="post" enctype="multipart/form-data">
         <?= csrf_field() ?>
 
         <div class="form-group">
@@ -22,8 +22,17 @@
             <select class="form-control" id="disposisi_ke" name="disposisi_ke" required>
                 <option value="">-- Pilih Tujuan Disposisi --</option>
                 <option value="Rektor">Rektor</option>
-                <option value="Satker">Satker</option>
-                <option value="Pimpinan Pondok">Pimpinan Pondok</option>
+                <option value="Rektor">WR1</option>
+                <option value="Rektor">WR2</option>
+                <option value="Rektor">WR3</option>
+                <option value="Rektor">WR4</option>
+                <option value="Satker">Satker LPPM</option>
+                <option value="Satker">Satker Fakultas Teknik</option>
+                <option value="Satker">Satker Fakultas MIPA</option>
+                <option value="Satker">Satker Fakultas Syari'ah dan ES</option>
+                <option value="Satker">Satker Fakultas Tarbiyah</option>
+                <option value="Satker">Satker Fakultas Ushuluddin</option>
+                <option value="Pimpinan Pondok">Satker Fakultas IKBIS</option>
                 <option value="Semua">Semua</option>
             </select>
         </div>

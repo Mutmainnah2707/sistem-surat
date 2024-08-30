@@ -29,20 +29,20 @@
                         <?php $i = 0 ?>
                         <?php if (!empty($surat_masuk) && is_array($surat_masuk)): ?>
                             <?php foreach ($surat_masuk as $item): ?>
-                            <tr>
-                                <td><?= ++$i ?></td>
-                                <td><?= esc($item['asal_surat']) ?></td>
-                                <td><?= esc($item['no_surat']) ?></td>
-                                <td><?= esc($item['perihal']) ?></td>
-                                <td><?= esc($item['tanggal_terima']) ?></td>
-                                <td><?= esc($item['tujuan_surat']) ?></td>
-                                <td>
-                                    <?= $item['status'] == 0 ? 'Belum Dibaca' : 'Sudah Dibaca' ?>
-                                </td> <!-- New data -->
-                                <td>
-                                    <a href="<?= site_url('pengurus/surat_masuk/' . $item['id_surat']) ?>" class="btn btn-info btn-sm">Show</a>
-                                </td>
-                            </tr>
+                                <tr>
+                                    <td><?= ++$i ?></td>
+                                    <td><?= esc($item['asal_surat']) ?></td>
+                                    <td><?= esc($item['no_surat']) ?></td>
+                                    <td><?= esc($item['perihal']) ?></td>
+                                    <td><?= esc($item['tanggal_terima']) ?></td>
+                                    <td><?= esc($item['tujuan_surat']) ?></td>
+                                    <td>
+                                        <?= $item['status'] == 0 ? 'Belum Dibaca' : 'Sudah Dibaca' ?>
+                                    </td> <!-- New data -->
+                                    <td>
+                                        <a href="<?= site_url('pengurus/surat_masuk/' . $item['id_surat']) ?>" class="btn btn-info btn-sm">Show</a>
+                                    </td>
+                                </tr>
                             <?php endforeach; ?>
                         <?php else: ?>
                             <tr>

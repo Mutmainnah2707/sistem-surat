@@ -1,11 +1,13 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Surat Management</title>
     <link href="<?= base_url('assetAdmin/css/sb-admin-2.min.css') ?>" rel="stylesheet">
 </head>
+
 <body>
     <div class="container">
         <h1 class="my-4">Surat Management</h1>
@@ -27,14 +29,14 @@
             </thead>
             <tbody>
                 <?php foreach ($surat_masuk as $surat): ?>
-                <tr>
-                    <td><?= $surat['id_surat'] ?></td>
-                    <td><?= $surat['asal_surat'] ?></td>
-                    <td><?= $surat['no_surat'] ?></td>
-                    <td><?= $surat['perihal'] ?></td>
-                    <td><?= $surat['tanggal_terima'] ?></td>
-                    <td><?= $surat['tujuan_surat'] ?></td>
-                </tr>
+                    <tr>
+                        <td><?= $surat['id_surat'] ?></td>
+                        <td><?= $surat['asal_surat'] ?></td>
+                        <td><?= $surat['no_surat'] ?></td>
+                        <td><?= $surat['perihal'] ?></td>
+                        <td><?= $surat['tanggal_terima'] ?></td>
+                        <td><?= $surat['tujuan_surat'] ?></td>
+                    </tr>
                 <?php endforeach; ?>
             </tbody>
         </table>
@@ -54,18 +56,19 @@
             </thead>
             <tbody>
                 <?php foreach ($surat_keluar as $surat): ?>
-                <tr>
-                    <td><?= $surat['id_surat'] ?></td>
-                    <td><?= $surat['asal_surat'] ?></td>
-                    <td><?= $surat['no_surat'] ?></td>
-                    <td><?= $surat['perihal'] ?></td>
-                    <td><?= $surat['tanggal_terima'] ?></td>
-                    <td><?= $surat['tujuan_surat'] ?></td>
-                    <td><?= $surat['id_surat_masuk'] ?></td>
-                </tr>
+                    <tr>
+                        <td><?= $surat['id_surat'] ?></td>
+                        <td><?= $surat['asal_surat'] ?></td>
+                        <td><?= $surat['no_surat'] ?></td>
+                        <td><?= $surat['perihal'] ?></td>
+                        <td><?= $surat['tanggal_terima'] ?></td>
+                        <td><?= $surat['tujuan_surat'] ?></td>
+                        <td><?= $surat['id_surat_masuk'] ?></td>
+                    </tr>
                 <?php endforeach; ?>
             </tbody>
         </table>
     </div>
 </body>
+
 </html>

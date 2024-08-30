@@ -7,7 +7,7 @@
 
 <div class="container-fluid">
     <a href="<?= site_url('surat/create_surat_keluar') ?>" class="btn btn-primary mb-3">Tambah Surat Keluar</a>
-    
+
     <div class="card shadow mb-4">
         <div class="card-header py-3">
             <h6 class="m-0 font-weight-bold text-primary">Daftar Surat Keluar</h6>
@@ -31,24 +31,24 @@
                         <?php $i = 0 ?>
                         <?php if (!empty($surat_keluar) && is_array($surat_keluar)): ?>
                             <?php foreach ($surat_keluar as $item): ?>
-                            <tr>
-                                <td><?= ++$i ?></td>
-                                <td><?= esc($item['asal_surat']) ?></td>
-                                <td><?= esc($item['no_surat']) ?></td>
-                                <td><?= esc($item['perihal']) ?></td>
-                                <td><?= esc($item['tanggal_terima']) ?></td>
-                                <td><?= esc($item['tujuan_surat']) ?></td>
-                                <td>
-                                    <?= $item['is_draft'] ? 'Draft' : 'Terkirim' ?>
-                                </td>
-                                <td>
-                                    <a href="<?= site_url('surat/show_surat_keluar/' . $item['id_surat']) ?>" class="btn btn-info btn-sm">Show</a>
-                                    <?php if ($item['is_draft']): ?>
-                                        <a href="<?= site_url('surat/edit_surat_keluar/' . $item['id_surat']) ?>" class="btn btn-warning btn-sm">Edit</a>
-                                    <?php endif; ?>
-                                    <a href="#" class="btn btn-danger btn-sm" onclick="confirmDelete('<?= site_url('surat/delete_surat_keluar/' . $item['id_surat']) ?>')">Delete</a>
-                                </td>
-                            </tr>
+                                <tr>
+                                    <td><?= ++$i ?></td>
+                                    <td><?= esc($item['asal_surat']) ?></td>
+                                    <td><?= esc($item['no_surat']) ?></td>
+                                    <td><?= esc($item['perihal']) ?></td>
+                                    <td><?= esc($item['tanggal_terima']) ?></td>
+                                    <td><?= esc($item['tujuan_surat']) ?></td>
+                                    <td>
+                                        <?= $item['is_draft'] ? 'Draft' : 'Terkirim' ?>
+                                    </td>
+                                    <td>
+                                        <a href="<?= site_url('surat/show_surat_keluar/' . $item['id_surat']) ?>" class="btn btn-info btn-sm">Show</a>
+                                        <?php if ($item['is_draft']): ?>
+                                            <a href="<?= site_url('surat/edit_surat_keluar/' . $item['id_surat']) ?>" class="btn btn-warning btn-sm">Edit</a>
+                                        <?php endif; ?>
+                                        <a href="#" class="btn btn-danger btn-sm" onclick="confirmDelete('<?= site_url('surat/delete_surat_keluar/' . $item['id_surat']) ?>')">Delete</a>
+                                    </td>
+                                </tr>
                             <?php endforeach; ?>
                         <?php else: ?>
                             <tr>

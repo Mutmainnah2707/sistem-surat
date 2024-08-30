@@ -1,11 +1,12 @@
 <?= $this->extend('dashboard/index') ?>
 
 <?= $this->section('content') ?>
-<div class="page-heading">
-    <h3>Daftar Disposisi</h3>
-</div>
 
 <div class="container-fluid">
+    <div class="page-heading mb-3">
+        <h3>Daftar Disposisi</h3>
+    </div>
+
     <?php if (session()->getFlashdata('errors')): ?>
         <div class="alert alert-danger">
             <ul>
@@ -22,8 +23,7 @@
         </div>
     <?php endif; ?>
 
-    <a href="<?= site_url('admin/disposisi/create') ?>" class="btn btn-primary mb-3">Tambah Disposisi</a>
-    
+
     <div class="card shadow mb-4">
         <div class="card-header py-3">
             <h6 class="m-0 font-weight-bold text-primary">Daftar Disposisi</h6>
@@ -45,18 +45,18 @@
                         <?php $i = 0 ?>
                         <?php if (!empty($disposisi) && is_array($disposisi)): ?>
                             <?php foreach ($disposisi as $item): ?>
-                            <tr>
-                                <td><?= ++$i ?></td>
-                                <td><?= esc($item['id_surat_masuk']) ?></td>
-                                <td><?= esc($item['tanggal_disposisi']) ?></td>
-                                <td><?= esc($item['disposisi_ke']) ?></td>
-                                <td><?= esc($item['keterangan']) ?></td>
-                                <td>
-                                    <a href="<?= site_url('surat/show_surat_masuk/' . $item['id_surat_masuk']) ?>" class="btn btn-info btn-sm">Lihat Surat Masuk</a>
-                                    <a href="<?= site_url('admin/disposisi/edit/' . $item['id_surat_masuk']) ?>" class="btn btn-warning btn-sm">Edit</a>
-                                    <a href="#" class="btn btn-danger btn-sm" onclick="confirmDelete('<?= site_url('admin/disposisi/delete/' . $item['id_surat_masuk']) ?>')">Delete</a>
-                                </td>
-                            </tr>
+                                <tr>
+                                    <td><?= ++$i ?></td>
+                                    <td><?= esc($item['id_surat_masuk']) ?></td>
+                                    <td><?= esc($item['tanggal_disposisi']) ?></td>
+                                    <td><?= esc($item['disposisi_ke']) ?></td>
+                                    <td><?= esc($item['keterangan']) ?></td>
+                                    <td>
+                                        <a href="<?= site_url('surat/show_surat_masuk/' . $item['id_surat_masuk']) ?>" class="btn btn-info btn-sm">Lihat Surat Masuk</a>
+                                        <a href="<?= site_url('admin/disposisi/edit/' . $item['id_surat_masuk']) ?>" class="btn btn-warning btn-sm">Edit</a>
+                                        <a href="#" class="btn btn-danger btn-sm" onclick="confirmDelete('<?= site_url('admin/disposisi/delete/' . $item['id_surat_masuk']) ?>')">Delete</a>
+                                    </td>
+                                </tr>
                             <?php endforeach; ?>
                         <?php else: ?>
                             <tr>

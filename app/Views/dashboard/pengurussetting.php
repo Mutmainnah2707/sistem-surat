@@ -20,21 +20,21 @@
             <!-- Sidebar - Brand -->
             <a class="sidebar-brand d-flex align-items-center justify-content-center" href="<?= site_url('/') ?>">
                 <div class="sidebar-brand-icon">
-                <img src="<?= base_url('logo/logo1.jpeg') ?>" alt="Logo" style="max-width: 100px; height: auto;">
+                    <img src="<?= base_url('logo/logo1.jpeg') ?>" alt="Logo" style="max-width: 100px; height: auto;">
                 </div>
                 <div class="sidebar-brand-text mx-3">Surat</div>
             </a>
             <hr class="sidebar-divider my-0">
 
-<!-- Nav Item - Dashboard -->
-<li class="nav-item <?= uri_string() === 'dashboard' ? 'active' : '' ?>">
-    <a class="nav-link" href="<?= site_url('dashboard') ?>">
-        <i class="fas fa-fw fa-tachometer-alt"></i>
-        <span>Dashboard</span>
-    </a>
-</li>
+            <!-- Nav Item - Dashboard -->
+            <li class="nav-item <?= uri_string() === 'dashboard' ? 'active' : '' ?>">
+                <a class="nav-link" href="<?= site_url('dashboard') ?>">
+                    <i class="fas fa-fw fa-tachometer-alt"></i>
+                    <span>Dashboard</span>
+                </a>
+            </li>
 
-<!-- Divider -->
+            <!-- Divider -->
 
 
             <!-- Divider -->
@@ -116,7 +116,7 @@
                 <div class="container-fluid">
 
                     <!-- Page Heading -->
-                    
+
 
                     <!-- Content Row -->
                     <div class="row">

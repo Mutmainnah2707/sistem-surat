@@ -7,27 +7,28 @@
 <?php endif; ?>
 
 <?= $this->section('content') ?>
-<div class="page-heading">
-    <h3>Pengaturan Akun</h3>
-</div>
 
 
 <div class="container-fluid">
-<?php if (session()->getFlashdata('errors')): ?>
-    <div class="alert alert-danger">
-        <ul>
-            <?php foreach (session()->getFlashdata('errors') as $error): ?>
-                <li><?= esc($error) ?></li>
-            <?php endforeach; ?>
-        </ul>
+    <div class="page-heading mb-3">
+        <h3>Pengaturan Akun</h3>
     </div>
-<?php endif; ?>
 
-<?php if (session()->getFlashdata('success')): ?>
-    <div class="alert alert-success">
-        <?= esc(session()->getFlashdata('success')) ?>
-    </div>
-<?php endif; ?>
+    <?php if (session()->getFlashdata('errors')): ?>
+        <div class="alert alert-danger">
+            <ul>
+                <?php foreach (session()->getFlashdata('errors') as $error): ?>
+                    <li><?= esc($error) ?></li>
+                <?php endforeach; ?>
+            </ul>
+        </div>
+    <?php endif; ?>
+
+    <?php if (session()->getFlashdata('success')): ?>
+        <div class="alert alert-success">
+            <?= esc(session()->getFlashdata('success')) ?>
+        </div>
+    <?php endif; ?>
 
     <form method="post" action="<?= site_url('settings/update-password') ?>">
         <?= csrf_field() ?>
