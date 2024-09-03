@@ -1,11 +1,11 @@
 <?= $this->extend('dashboard/satker') ?>
 
 <?= $this->section('content') ?>
-<div class="page-heading">
-    <h3>Surat Masuk</h3>
-</div>
 
 <div class="container-fluid">
+    <div class="page-heading mb-3">
+        <h3>Surat Masuk</h3>
+    </div>
 
     <div class="card shadow mb-4">
         <div class="card-header py-3">
@@ -42,7 +42,7 @@
                                     </td>
                                     <td>
                                         <a href="<?= site_url('satker/surat_masuk/' . $item['id_surat']) ?>" class="btn btn-info btn-sm">Show</a>
-                                        <a href="#" class="btn btn-danger btn-sm" onclick="confirmDelete('<?= site_url('satker/surat_masuk/' . $item['id_surat']) ?>')">Delete</a>
+                                        <a href="#" class="btn btn-danger btn-sm" onclick="confirmDelete('<?= site_url('satker/surat_masuk/' . $item['id_surat'] . '/delete') ?>')">Delete</a>
 
                                     </td>
                                 </tr>

@@ -20,7 +20,7 @@
             <!-- Sidebar - Brand -->
             <a class="sidebar-brand d-flex align-items-center justify-content-center" href="<?= site_url('/') ?>">
                 <div class="sidebar-brand-icon">
-                    <img src="<?= base_url('logo/logo1.jpeg') ?>" alt="Logo" style="max-width: 100px; height: auto;">
+                    <img src="<?= base_url('logo/logo1.png')  ?>" alt="Logo" style="max-width: 100px; height: auto;">
                 </div>
                 <div class="sidebar-brand-text mx-3">Surat</div>
             </a>

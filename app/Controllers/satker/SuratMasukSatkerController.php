@@ -22,22 +22,22 @@ class SuratMasukSatkerController extends BaseController
         $data['level'] = $session->get('level');
         $suratMasukModel = new SuratMasukModel();
         $data['jumlahBelumDibaca'] = $suratMasukModel->where('status', 0)
-                                                     ->where('tujuan_surat', 'Satker')
-                                                     ->countAllResults();
+            ->where('tujuan_surat', 'Satker')
+            ->countAllResults();
         $data['surat_masuk'] = $this->model->where('tujuan_surat', 'Satker')->findAll(); // Mengambil data surat yang ditujukan ke Satker
         return view('satker/surat_masuk/index', $data);
     }
 
     public function suratMasuk()
-{
-    $session = session();
-    $data['user'] = $session->get('nama');
-    $data['level'] = $session->get('level');
-    
-   
-    
-    return view('surat_masuk/index', $data);
-}
+    {
+        $session = session();
+        $data['user'] = $session->get('nama');
+        $data['level'] = $session->get('level');
+
+
+
+        return view('surat_masuk/index', $data);
+    }
 
     public function create()
     {
@@ -46,8 +46,8 @@ class SuratMasukSatkerController extends BaseController
         $data['level'] = $session->get('level');
         $suratMasukModel = new SuratMasukModel();
         $data['jumlahBelumDibaca'] = $suratMasukModel->where('status', 0)
-                                                     ->where('tujuan_surat', 'Satker')
-                                                     ->countAllResults();
+            ->where('tujuan_surat', 'Satker')
+            ->countAllResults();
         return view('satker/surat_masuk/create', $data);
     }
 
@@ -80,26 +80,30 @@ class SuratMasukSatkerController extends BaseController
 
     public function show($id)
     {
-        
+
         $session = session();
         $data['user'] = $session->get('nama');
         $data['level'] = $session->get('level');
         $suratMasukModel = new SuratMasukModel();
         $data['jumlahBelumDibaca'] = $suratMasukModel->where('status', 0)
-                                                     ->where('tujuan_surat', 'Satker')
-                                                     ->countAllResults();
+            ->where('tujuan_surat', 'Satker')
+            ->countAllResults();
         // Ambil detail surat berdasarkan ID
-        $data['surat'] = $this->model->find($id);
+        $data['surat_masuk'] = $this->model->find($id);
 
         // Jika surat tidak ditemukan, lemparkan exception
-        if (!$data['surat']) {
+        if (!$data['surat_masuk']) {
             throw new \CodeIgniter\Exceptions\PageNotFoundException('Surat tidak ditemukan.');
         }
 
         // Periksa status surat dan update jika perlu
-        if ($data['surat']['status'] == 0) {
+        if ($data['surat_masuk']['status'] == 0) {
             $this->model->update($id, ['status' => 1]);
         }
+
+        $filePath = WRITEPATH . 'uploads/' . $data['surat_masuk']['file_surat'];
+        $fileInfo = pathinfo($filePath);
+        $data['fileExtension'] = strtolower($fileInfo['extension']);
 
         // Tampilkan view dengan data surat
         return view('satker/surat_masuk/show', $data);
@@ -112,8 +116,8 @@ class SuratMasukSatkerController extends BaseController
         $data['level'] = $session->get('level');
         $suratMasukModel = new SuratMasukModel();
         $data['jumlahBelumDibaca'] = $suratMasukModel->where('status', 0)
-                                                     ->where('tujuan_surat', 'Satker')
-                                                     ->countAllResults();
+            ->where('tujuan_surat', 'Satker')
+            ->countAllResults();
         $data['surat'] = $this->model->find($id);
 
         if (!$data['surat']) {

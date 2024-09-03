@@ -7,7 +7,7 @@
         <h3>Edit Surat Masuk</h3>
     </div>
 
-    <form action="<?= site_url('satker/surat_masuk/' . $surat_masuk['id_surat']) ?>" method="post">
+    <form action="<?= site_url('surat/update_surat_masuk/' . $surat_masuk['id_surat']) ?>" method="post">
         <input type="hidden" name="_method" value="PUT"> <!-- Tambahkan ini untuk menggunakan metode PUT -->
         <div class="card shadow mb-4">
             <div class="card-header py-3">

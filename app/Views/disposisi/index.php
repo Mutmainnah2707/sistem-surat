@@ -53,7 +53,6 @@
                                     <td><?= esc($item['keterangan']) ?></td>
                                     <td>
                                         <a href="<?= site_url('surat/show_surat_masuk/' . $item['id_surat_masuk']) ?>" class="btn btn-info btn-sm">Lihat Surat Masuk</a>
-                                        <a href="<?= site_url('admin/disposisi/edit/' . $item['id_surat_masuk']) ?>" class="btn btn-warning btn-sm">Edit</a>
                                         <a href="#" class="btn btn-danger btn-sm" onclick="confirmDelete('<?= site_url('admin/disposisi/delete/' . $item['id_surat_masuk']) ?>')">Delete</a>
                                     </td>
                                 </tr>

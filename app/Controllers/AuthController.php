@@ -31,7 +31,15 @@ class AuthController extends Controller
                 'isLoggedIn' => true
             ]);
 
-            return redirect()->to('/dashboard');
+            if ($user['level'] == 'admin') {
+                $view = 'dashboard';
+            } else if ($user['level'] == 'satker') {
+                $view = 'satkerdashboard';
+            } else if ($user['level'] == 'pengurus') {
+                $view = 'pengurusdashboard';
+            }
+
+            return redirect()->to($view);
         } else {
             $session = session();
             $session->setFlashdata('error', 'Invalid email or password');

@@ -26,8 +26,8 @@
             <hr class="sidebar-divider my-0">
 
             <!-- Nav Item - Dashboard -->
-            <li class="nav-item <?= uri_string() === 'dashboard' ? 'active' : '' ?>">
-                <a class="nav-link" href="<?= site_url('dashboard') ?>">
+            <li class="nav-item <?= uri_string() === 'pengurusdashboard' ? 'active' : '' ?>">
+                <a class="nav-link" href="<?= site_url('pengurusdashboard') ?>">
                     <i class="fas fa-fw fa-tachometer-alt"></i>
                     <span>Dashboard</span>
                 </a>
@@ -51,8 +51,8 @@
             <hr class="sidebar-divider">
 
             <!-- Nav Item - Settings -->
-            <li class="nav-item <?= uri_string() === 'settings' ? 'active' : '' ?>">
-                <a class="nav-link" href="<?= site_url('settings') ?>">
+            <li class="nav-item <?= uri_string() === 'settings/pengurus' ? 'active' : '' ?>">
+                <a class="nav-link" href="<?= site_url('settings/pengurus') ?>">
                     <i class="fas fa-fw fa-cogs"></i>
                     <span>Pengaturan</span>
                 </a>

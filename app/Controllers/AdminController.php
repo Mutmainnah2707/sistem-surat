@@ -311,46 +311,46 @@ class AdminController extends BaseController
 
         return redirect()->to('/admin/list-pengurus')->with('success', 'Pengurus pondok berhasil diperbarui.');
     }
+
     public function deleteAdmin($id)
-{
-    $userModel = new UserModel();
-    $admin = $userModel->find($id);
+    {
+        $userModel = new UserModel();
+        $admin = $userModel->find($id);
 
-    if (!$admin) {
-        throw new \CodeIgniter\Exceptions\PageNotFoundException('Admin tidak ditemukan.');
+        if (!$admin) {
+            throw new \CodeIgniter\Exceptions\PageNotFoundException('Admin tidak ditemukan.');
+        }
+
+        $userModel->delete($id);
+
+        return redirect()->to('/admin/list-admin')->with('success', 'Admin berhasil dihapus.');
     }
 
-    $userModel->delete($id);
+    public function deleteSatker($id)
+    {
+        $userModel = new UserModel();
+        $satker = $userModel->find($id);
 
-    return redirect()->to('/admin/list-admin')->with('success', 'Admin berhasil dihapus.');
-}
+        if (!$satker) {
+            throw new \CodeIgniter\Exceptions\PageNotFoundException('Satker tidak ditemukan.');
+        }
 
-public function deleteSatker($id)
-{
-    $userModel = new UserModel();
-    $satker = $userModel->find($id);
+        $userModel->delete($id);
 
-    if (!$satker) {
-        throw new \CodeIgniter\Exceptions\PageNotFoundException('Satker tidak ditemukan.');
+        return redirect()->to('/admin/list-satker')->with('success', 'Satker berhasil dihapus.');
     }
 
-    $userModel->delete($id);
+    public function deletePengurus($id)
+    {
+        $userModel = new UserModel();
+        $pengurus = $userModel->find($id);
 
-    return redirect()->to('/admin/list-satker')->with('success', 'Satker berhasil dihapus.');
-}
+        if (!$pengurus) {
+            throw new \CodeIgniter\Exceptions\PageNotFoundException('Pengurus tidak ditemukan.');
+        }
 
-public function deletePengurus($id)
-{
-    $userModel = new UserModel();
-    $pengurus = $userModel->find($id);
+        $userModel->delete($id);
 
-    if (!$pengurus) {
-        throw new \CodeIgniter\Exceptions\PageNotFoundException('Pengurus tidak ditemukan.');
+        return redirect()->to('/admin/list-pengurus')->with('success', 'Pengurus pondok berhasil dihapus.');
     }
-
-    $userModel->delete($id);
-
-    return redirect()->to('/admin/list-pengurus')->with('success', 'Pengurus pondok berhasil dihapus.');
-}
-
 }

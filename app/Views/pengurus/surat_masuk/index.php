@@ -1,11 +1,11 @@
 <?= $this->extend('dashboard/pengurus') ?>
 
 <?= $this->section('content') ?>
-<div class="page-heading">
-    <h3>Surat Masuk</h3>
-</div>
 
 <div class="container-fluid">
+    <div class="page-heading mb-3">
+        <h3>Surat Masuk</h3>
+    </div>
     <div class="card shadow mb-4">
         <div class="card-header py-3">
             <h6 class="m-0 font-weight-bold text-primary">Daftar Surat Masuk</h6>

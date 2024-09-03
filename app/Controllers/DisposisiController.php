@@ -97,22 +97,6 @@ class DisposisiController extends BaseController
         }
     }
 
-
-
-
-
-    public function edit($id_surat_masuk)
-    {
-        // Model SuratMasuk digunakan untuk mendapatkan data surat masuk
-        $suratMasukModel = new \App\Models\SuratMasukModel();
-    
-        // Hitung jumlah surat masuk yang belum dibaca
-        $data['jumlahBelumDibaca'] = $suratMasukModel->where('status', 0)->countAllResults();
-        
-        $data['disposisi'] = $this->disposisiModel->find($id_surat_masuk);
-        return view('disposisi/edit', $data);
-    }
-
     public function update($id_surat_masuk)
     {
         $this->disposisiModel->save([

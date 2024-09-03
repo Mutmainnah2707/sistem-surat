@@ -1,4 +1,6 @@
-<?php namespace App\Controllers;
+<?php
+
+namespace App\Controllers;
 
 use App\Models\SuratMasukModel;
 use App\Models\SuratKeluarModel;
@@ -28,7 +30,7 @@ class SuratController extends BaseController
         $data['level'] = $session->get('level');
         $suratMasukModel = new SuratMasukModel();
         $data['jumlahBelumDibaca'] = $suratMasukModel->where('status', 0)
-                                                     ->countAllResults();
+            ->countAllResults();
         $data['surat_masuk'] = $this->suratMasukModel->findAll();
         return view('surat/surat_masuk', $data);
     }
@@ -40,9 +42,9 @@ class SuratController extends BaseController
         $data['level'] = $session->get('level');
         $suratMasukModel = new SuratMasukModel();
         $data['jumlahBelumDibaca'] = $suratMasukModel->where('status', 0)
-                                                     ->countAllResults();
+            ->countAllResults();
         $data['surat_masuk'] = $this->suratMasukModel->findAll();
-        
+
         return view('surat/create_surat_masuk', $data);
     }
 
@@ -94,21 +96,88 @@ class SuratController extends BaseController
         return redirect()->to('/surat/surat_masuk')->with('success', 'Data surat masuk berhasil disimpan.');
     }
 
+    public function showSuratMasuk($id_surat_masuk)
+    {
+        $session = session();
+        $data['user'] = $session->get('nama');
+        $data['level'] = $session->get('level');
+        $suratMasukModel = new SuratMasukModel();
+        $data['jumlahBelumDibaca'] = $suratMasukModel->where('status', 0)
+            ->countAllResults();
+        $data['surat_masuk'] = $this->suratMasukModel->find($id_surat_masuk);
+
+        if (!$data['surat_masuk']) {
+            throw \CodeIgniter\Exceptions\PageNotFoundException::forPageNotFound('Surat Masuk tidak ditemukan');
+        }
+
+        $filePath = WRITEPATH . 'uploads/' . $data['surat_masuk']['file_surat'];
+        $fileInfo = pathinfo($filePath);
+        $data['fileExtension'] = strtolower($fileInfo['extension']);
+
+        return view('surat/show_surat_masuk', $data);
+    }
 
     public function editSuratMasuk($id_surat_masuk)
     {
         $session = session();
-            $data['user'] = $session->get('nama');
-            $data['level'] = $session->get('level');
-            $suratMasukModel = new SuratMasukModel();
-            $data['jumlahBelumDibaca'] = $suratMasukModel->where('status', 0)
-                                                        ->countAllResults();
+        $data['user'] = $session->get('nama');
+        $data['level'] = $session->get('level');
+        $suratMasukModel = new SuratMasukModel();
+        $data['jumlahBelumDibaca'] = $suratMasukModel->where('status', 0)
+            ->countAllResults();
 
         $data['surat_masuk'] = $this->suratMasukModel->find($id_surat_masuk);
         if (!$data['surat_masuk']) {
             throw \CodeIgniter\Exceptions\PageNotFoundException::forPageNotFound('Surat Masuk tidak ditemukan');
         }
         return view('surat/edit_surat_masuk', $data);
+    }
+
+    public function updateSuratMasuk($id)
+    {
+        $validation = \Config\Services::validation();
+
+        $validation->setRules([
+            'asal_surat' => 'required|max_length[255]',
+            'no_surat' => 'required|max_length[100]',
+            'perihal' => 'required|max_length[255]',
+            'tanggal_terima' => 'required|valid_date',
+            'tujuan_surat' => 'required|max_length[255]'
+        ]);
+
+        if (!$validation->withRequest($this->request)->run()) {
+            return redirect()->back()->withInput()->with('errors', $validation->getErrors());
+        }
+
+        $this->suratMasukModel->update($id, [
+            'asal_surat' => $this->request->getPost('asal_surat'),
+            'no_surat' => $this->request->getPost('no_surat'),
+            'perihal' => $this->request->getPost('perihal'),
+            'tanggal_terima' => $this->request->getPost('tanggal_terima'),
+            'tujuan_surat' => $this->request->getPost('tujuan_surat')
+        ]);
+
+        return redirect()->to('/surat/surat_masuk')->with('success', 'Surat Masuk berhasil diperbarui.');
+    }
+
+    public function deleteSuratMasuk($id_surat_masuk)
+    {
+        $suratMasuk = $this->suratMasukModel->find($id_surat_masuk);
+
+        if (!$suratMasuk) {
+            return redirect()->back()->with('error', 'Surat Masuk tidak ditemukan.');
+        }
+
+        // Hapus file terkait jika ada
+        if ($suratMasuk['file_surat'] && file_exists(WRITEPATH . 'uploads/' . $suratMasuk['file_surat'])) {
+            unlink(WRITEPATH . 'uploads/' . $suratMasuk['file_surat']);
+        }
+
+        if ($this->suratMasukModel->delete($id_surat_masuk)) {
+            return redirect()->to('/surat/surat_masuk')->with('success', 'Surat masuk berhasil dihapus.');
+        } else {
+            return redirect()->back()->with('error', 'Gagal menghapus surat masuk.');
+        }
     }
 
     // Surat Keluar
@@ -119,7 +188,7 @@ class SuratController extends BaseController
         $data['level'] = $session->get('level');
         $suratMasukModel = new SuratMasukModel();
         $data['jumlahBelumDibaca'] = $suratMasukModel->where('status', 0)
-                                                     ->countAllResults();
+            ->countAllResults();
         $data['surat_keluar'] = $this->suratKeluarModel->findAll();
         return view('surat/surat_keluar', $data);
     }
@@ -131,7 +200,7 @@ class SuratController extends BaseController
         $data['level'] = $session->get('level');
         $suratMasukModel = new SuratMasukModel();
         $data['jumlahBelumDibaca'] = $suratMasukModel->where('status', 0)
-                                                     ->countAllResults();
+            ->countAllResults();
         $data['surat_masuk'] = $this->suratMasukModel->findAll();
         return view('surat/create_surat_keluar', $data);
     }
@@ -210,16 +279,35 @@ class SuratController extends BaseController
         }
     }
 
+    public function showSuratKeluar($id_surat_keluar)
+    {
+        $session = session();
+        $data['user'] = $session->get('nama');
+        $data['level'] = $session->get('level');
+        $suratMasukModel = new SuratMasukModel();
+        $data['jumlahBelumDibaca'] = $suratMasukModel->where('status', 0)
+            ->countAllResults();
+        $data['surat_keluar'] = $this->suratKeluarModel->find($id_surat_keluar);
 
-    // Surat Keluar
+        if (!$data['surat_keluar']) {
+            throw \CodeIgniter\Exceptions\PageNotFoundException::forPageNotFound('Surat Keluar tidak ditemukan');
+        }
+
+        $filePath = WRITEPATH . 'uploads/' . $data['surat_keluar']['file_surat']; // Get nama file surat yang ada di database tabel surat keluar
+        $fileInfo = pathinfo($filePath); // Get extensi file surat
+        $data['fileExtension'] = strtolower($fileInfo['extension']);
+
+        return view('surat/show_surat_keluar', $data);
+    }
+
     public function editSuratKeluar($id_surat_keluar)
     {
         $session = session();
-            $data['user'] = $session->get('nama');
-            $data['level'] = $session->get('level');
-            $suratMasukModel = new SuratMasukModel();
-            $data['jumlahBelumDibaca'] = $suratMasukModel->where('status', 0)
-                                                        ->countAllResults();
+        $data['user'] = $session->get('nama');
+        $data['level'] = $session->get('level');
+        $suratMasukModel = new SuratMasukModel();
+        $data['jumlahBelumDibaca'] = $suratMasukModel->where('status', 0)
+            ->countAllResults();
         $data['surat_keluar'] = $this->suratKeluarModel->find($id_surat_keluar);
         if (!$data['surat_keluar']) {
             throw \CodeIgniter\Exceptions\PageNotFoundException::forPageNotFound('Surat Keluar tidak ditemukan');
@@ -299,100 +387,6 @@ class SuratController extends BaseController
         }
     }
 
-
-
-
-    private function generateNoSurat()
-    {
-        $tahun = date('Y'); 
-        $bulan = date('m'); 
-
-        $suratMasukModel = new SuratMasukModel();
-        $lastNoSurat = $suratMasukModel->orderBy('id_surat', 'DESC')->first();
-
-        
-        $nomorUrut = 1;
-        if ($lastNoSurat) {
-            preg_match('/(\d+)/', $lastNoSurat['no_surat'], $matches);
-            $nomorUrut = $matches[0] + 1;
-        }
-
-        $noSurat = sprintf('%s/%03d/%s/%s', 'VI', $nomorUrut, 'A', 'VIII');
-        return $noSurat;
-    }
-    
-    public function download($fileName)
-    {
-        $filePath = WRITEPATH . 'uploads/' . $fileName; 
-        
-        if (file_exists($filePath)) {
-            return $this->response->download($filePath, null);
-        } else {
-            throw \CodeIgniter\Exceptions\PageNotFoundException::forPageNotFound('File not found');
-        }
-    }
-    
-
-    public function showSuratMasuk($id_surat_masuk)
-    {
-        $session = session();
-        $data['user'] = $session->get('nama');
-        $data['level'] = $session->get('level');
-        $suratMasukModel = new SuratMasukModel();
-        $data['jumlahBelumDibaca'] = $suratMasukModel->where('status', 0)
-                                                     ->countAllResults();
-        $data['surat_masuk'] = $this->suratMasukModel->find($id_surat_masuk);
-
-        if (!$data['surat_masuk']) {
-            throw \CodeIgniter\Exceptions\PageNotFoundException::forPageNotFound('Surat Masuk tidak ditemukan');
-        }
-        
-        $filePath = WRITEPATH . 'uploads/' . $data['surat_masuk']['file_surat'];
-        $fileInfo = pathinfo($filePath);
-        $data['fileExtension'] = strtolower($fileInfo['extension']);
-
-        return view('surat/show_surat_masuk', $data);
-    }
-
-    public function showSuratKeluar($id_surat_keluar)
-    {
-        $session = session();
-            $data['user'] = $session->get('nama');
-            $data['level'] = $session->get('level');
-            $suratMasukModel = new SuratMasukModel();
-            $data['jumlahBelumDibaca'] = $suratMasukModel->where('status', 0)
-                                                        ->countAllResults();
-        $data['surat_keluar'] = $this->suratKeluarModel->find($id_surat_keluar);
-
-        if (!$data['surat_keluar']) {
-            throw \CodeIgniter\Exceptions\PageNotFoundException::forPageNotFound('Surat Keluar tidak ditemukan');
-        }
-
-        $filePath = WRITEPATH . 'uploads/' . $data['surat_keluar']['file_surat']; // Get nama file surat yang ada di database tabel surat keluar
-        $fileInfo = pathinfo($filePath); // Get extensi file surat
-        $data['fileExtension'] = strtolower($fileInfo['extension']);
-
-        return view('surat/show_surat_keluar', $data);
-    }
-
-    // Fungsi untuk menampilkan file PDF yang ada di folder "/writable/uploads"
-    public function viewPdf($filename)
-    {
-        $path = WRITEPATH . 'uploads/' . $filename;
-
-        if (!file_exists($path)) {
-            throw new \CodeIgniter\Exceptions\PageNotFoundException("File PDF tidak ditemukan: " . $filename);
-        }
-
-        $this->response->setHeader('Content-Type', 'application/pdf');
-        return $this->response->setBody(file_get_contents($path));
-    }
-
-    public function profile()
-    {
-        return view('profile');
-    }
-
     public function deleteSuratKeluar($id_surat_keluar)
     {
         $suratKeluar = $this->suratKeluarModel->find($id_surat_keluar);
@@ -413,23 +407,47 @@ class SuratController extends BaseController
         }
     }
 
-    public function deleteSuratMasuk($id_surat_masuk)
+
+    // Lain-lain
+    private function generateNoSurat()
     {
-        $suratMasuk = $this->suratMasukModel->find($id_surat_masuk);
+        $tahun = date('Y');
+        $bulan = date('m');
 
-        if (!$suratMasuk) {
-            return redirect()->back()->with('error', 'Surat Masuk tidak ditemukan.');
+        $suratMasukModel = new SuratMasukModel();
+        $lastNoSurat = $suratMasukModel->orderBy('id_surat', 'DESC')->first();
+
+
+        $nomorUrut = 1;
+        if ($lastNoSurat) {
+            preg_match('/(\d+)/', $lastNoSurat['no_surat'], $matches);
+            $nomorUrut = $matches[0] + 1;
         }
 
-        // Hapus file terkait jika ada
-        if ($suratMasuk['file_surat'] && file_exists(WRITEPATH . 'uploads/' . $suratMasuk['file_surat'])) {
-            unlink(WRITEPATH . 'uploads/' . $suratMasuk['file_surat']);
+        $noSurat = sprintf('%s/%03d/%s/%s', 'VI', $nomorUrut, 'A', 'VIII');
+        return $noSurat;
+    }
+
+    public function viewPdf($filename)
+    {
+        $path = WRITEPATH . 'uploads/' . $filename;
+
+        if (!file_exists($path)) {
+            throw new \CodeIgniter\Exceptions\PageNotFoundException("File PDF tidak ditemukan: " . $filename);
         }
 
-        if ($this->suratMasukModel->delete($id_surat_masuk)) {
-            return redirect()->to('/surat/surat_masuk')->with('success', 'Surat masuk berhasil dihapus.');
+        $this->response->setHeader('Content-Type', 'application/pdf');
+        return $this->response->setBody(file_get_contents($path));
+    }
+
+    public function download($fileName)
+    {
+        $filePath = WRITEPATH . 'uploads/' . $fileName;
+
+        if (file_exists($filePath)) {
+            return $this->response->download($filePath, null);
         } else {
-            return redirect()->back()->with('error', 'Gagal menghapus surat masuk.');
+            throw \CodeIgniter\Exceptions\PageNotFoundException::forPageNotFound('File not found');
         }
     }
 }

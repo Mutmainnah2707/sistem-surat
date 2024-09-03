@@ -3,7 +3,7 @@
 namespace App\Controllers;
 
 use CodeIgniter\Controller;
-use App\Models\SuratMasukModel; 
+use App\Models\SuratMasukModel;
 
 class DashboardController extends Controller
 {
@@ -21,23 +21,50 @@ class DashboardController extends Controller
         $suratMasukModel = new SuratMasukModel();
         $jumlahBelumDibaca = $suratMasukModel->where('status', 0)->countAllResults();
 
-        // Menambahkan logika untuk level 'satker'
-        if ($level === 'satker') {
-            $jumlahBelumDibaca = $suratMasukModel->where('status', 0)
-                                                  ->where('tujuan_surat', 'Satker')
-                                                  ->countAllResults();
-            $view = 'dashboard/satkerboard'; 
-        } elseif ($level === 'pengurus') {
-            $jumlahBelumDibaca = $suratMasukModel->where('status', 0)
-            ->where('tujuan_surat', 'Pimpinan Pondok')
+        $data['jumlahBelumDibaca'] = $jumlahBelumDibaca;
+
+        return view('dashboard/admin', $data);
+    }
+
+    public function satkerdashboard()
+    {
+        $session = session();
+        $level = $session->get('level');
+
+        $data = [
+            'user' => $session->get('nama'),
+            'level' => $level,
+        ];
+
+        $suratMasukModel = new SuratMasukModel();
+
+        $jumlahBelumDibaca = $suratMasukModel->where('status', 0)
+            ->where('tujuan_surat', 'Satker')
             ->countAllResults();
-            $view = 'dashboard/pengurusboard'; 
-        } else {
-            $view = 'dashboard/admin'; 
-        }
 
         $data['jumlahBelumDibaca'] = $jumlahBelumDibaca;
 
-        return view($view, $data);
+        return view('dashboard/satkerboard', $data);
+    }
+
+    public function pengurusdashboard()
+    {
+        $session = session();
+        $level = $session->get('level');
+
+        $data = [
+            'user' => $session->get('nama'),
+            'level' => $level,
+        ];
+
+        $suratMasukModel = new SuratMasukModel();
+
+        $jumlahBelumDibaca = $suratMasukModel->where('status', 0)
+            ->where('tujuan_surat', 'Pimpinan Pondok')
+            ->countAllResults();
+
+        $data['jumlahBelumDibaca'] = $jumlahBelumDibaca;
+
+        return view('dashboard/pengurusboard', $data);
     }
 }
