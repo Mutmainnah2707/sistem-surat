@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Aug 25, 2024 at 05:12 PM
+-- Generation Time: Aug 26, 2024 at 04:01 PM
 -- Server version: 10.4.32-MariaDB
 -- PHP Version: 8.2.12
 
@@ -39,7 +39,9 @@ CREATE TABLE `disposisi` (
 --
 
 INSERT INTO `disposisi` (`id_surat_masuk`, `tanggal_disposisi`, `disposisi_ke`, `keterangan`) VALUES
-(1, '2024-08-22', 'Satker', 'Satker');
+(1, '2024-08-22', 'Satker', 'Satker'),
+(1, '2024-08-26', 'Pimpinan Pondok', 'tes'),
+(15, '2024-08-26', 'Rektor', 'Surat Disposisi');
 
 -- --------------------------------------------------------
 
@@ -100,7 +102,10 @@ INSERT INTO `surat_keluar` (`id_surat`, `asal_surat`, `no_surat`, `perihal`, `ta
 (7, 'Admin', 'VI/026/A/VIII', 'Pemberitahuan', '2024-08-23', 'Pimpinan Pondok', 'Pemberitahuan', '1724427768_42124572e07ba53c0593.docx', 8, 0),
 (8, 'disposisi', '', 'disposisi', '2024-08-25', 'Satker', 'disposisi', '1724589530_1f267bd5b8e07a4a4767.docx', NULL, 0),
 (9, 'adminkk', 'VI/334/A/VIII', 'adminkk', '2024-08-25', 'Satker', 'adminkk', '1724593947_fd6751fb5166b920e2dd.docx', NULL, 0),
-(10, 'notdraft', 'VI/334/A/VIII', 'notdraft', '2024-08-25', 'Satker', 'notdraft', '1724594031_72a7c6502caccbc91cfc.docx', 13, 0);
+(10, 'notdraft', 'VI/334/A/VIII', 'notdraft', '2024-08-25', 'Satker', 'notdraft', '1724594031_72a7c6502caccbc91cfc.docx', 13, 0),
+(11, 'admin', 'VI/334/A/VIII', 'Pemberitahuan', '2024-08-26', 'Satker', 'Pemberitahuan', '1724666792_2cb7a5d375e11f583a7f.docx', NULL, 0),
+(12, 'tessatjkerr', 'VI/335/A/VIII', 'tessatjkerr', '2024-08-26', 'Satker', 'tessatjkerr', '1724671560_06e6f39cf4b822315b8f.docx', NULL, 1),
+(13, 'adminkerr', 'VI/335/A/VIII', 'adminkerr', '2024-08-26', 'Satker', 'adminkerr', '1724671785_536999e624e794e31f08.docx', NULL, 1);
 
 -- --------------------------------------------------------
 
@@ -127,17 +132,19 @@ CREATE TABLE `surat_masuk` (
 --
 
 INSERT INTO `surat_masuk` (`id_surat`, `asal_surat`, `no_surat`, `perihal`, `tanggal_terima`, `tujuan_surat`, `jenis_surat`, `file_surat`, `created_at`, `updated_at`, `status`) VALUES
-(1, 'halo dekllss', '20', 'halo', '2024-08-21', 'Satker', 'Halo dek', '1724225795_20b74470ea7c108119d6.jpeg', '2024-08-20 17:36:35', '2024-08-23 07:37:10', 1),
+(1, 'halo dekllss', '20', 'halo', '2024-08-21', 'Pimpinan Pondok', 'Halo dek', '1724647692_47b9b8503df9c6f449ff.docx', '2024-08-20 17:36:35', '2024-08-25 21:48:12', 1),
 (2, 'halo dek', '20', 'halo', '2024-08-21', 'Pengurus', NULL, NULL, '2024-08-20 17:47:37', '2024-08-21 19:34:42', 0),
 (3, 'halo dek', 'VI/021/A/VIII', 'halo', '2024-08-21', 'Pimpinan Pondok', NULL, NULL, '2024-08-20 17:53:36', '2024-08-25 05:05:58', 1),
 (4, 'halo dek', 'VI/022/A/VIII', 'satker', '2024-08-21', 'Satker', NULL, NULL, '2024-08-21 02:30:17', '2024-08-23 00:58:42', 1),
 (5, 'tes satker', 'VI/023/A/VIII', 'satker', '2024-08-21', 'Satker', 'satker', '1724258197_c647769e36fbcf3d99ce.docx', '2024-08-21 02:36:37', '2024-08-25 04:38:48', 1),
 (6, 'pengurus', 'VI/024/A/VIII', 'pengurus', '2024-08-22', 'Satker', 'pengurus', '1724260208_45e1a960d9989c945ad3.docx', '2024-08-21 03:10:08', '2024-08-25 04:39:03', 1),
-(7, 'tes satkerss', 'VI/025/A/VIII', 'satker', '2024-08-23', 'Satker', 'Pemberitahuan', '1724423023_09f9caec8dbe349937b5.docx', '2024-08-23 00:23:43', '2024-08-23 00:23:43', 0),
-(8, 'Admin', 'VI/026/A/VIII', 'Pemberitahuan', '2024-08-23', 'Satker', 'Pemberitahuan', '1724427768_42124572e07ba53c0593.docx', '2024-08-23 01:42:48', '2024-08-23 01:42:48', 0),
+(7, 'tes satkerss', 'VI/025/A/VIII', 'satker', '2024-08-23', 'Satker', 'Pemberitahuan', '1724423023_09f9caec8dbe349937b5.docx', '2024-08-23 00:23:43', '2024-08-26 03:08:43', 1),
+(8, 'Admin', 'VI/026/A/VIII', 'Pemberitahuan', '2024-08-23', 'Satker', 'Pemberitahuan', '1724427768_42124572e07ba53c0593.docx', '2024-08-23 01:42:48', '2024-08-26 03:09:08', 1),
 (12, 'admin', '333', 'admin', '2024-08-25', 'admin', NULL, '1724589740_91a2368669cbab3baf60.docx', '2024-08-25 05:42:20', '2024-08-25 05:42:20', 0),
 (13, 'notdraft', 'VI/334/A/VIII', 'notdraft', '2024-08-25', 'Satker', 'notdraft', '1724594031_72a7c6502caccbc91cfc.docx', '2024-08-25 06:53:51', '2024-08-25 06:53:51', 0),
-(14, 'adminkk', 'VI/335/A/VIII', 'adminkk', '2024-08-25', 'Satker', 'adminkk', '1724593947_fd6751fb5166b920e2dd.docx', '2024-08-25 07:31:22', '2024-08-25 07:31:22', 0);
+(14, 'adminkk', 'VI/335/A/VIII', 'adminkk', '2024-08-25', 'Satker', 'adminkk', '1724593947_fd6751fb5166b920e2dd.docx', '2024-08-25 07:31:22', '2024-08-25 07:31:22', 0),
+(15, 'disposisi', '333', 'disposisi', '2024-08-26', 'Rektor', NULL, '1724666610_ff991960b66247cb908e.docx', '2024-08-26 03:02:38', '2024-08-26 03:03:30', 0),
+(16, 'admin', 'VI/334/A/VIII', 'Pemberitahuan', '2024-08-26', 'Satker', 'Pemberitahuan', '1724666792_2cb7a5d375e11f583a7f.docx', '2024-08-26 03:07:06', '2024-08-26 03:07:06', 0);
 
 -- --------------------------------------------------------
 
@@ -216,13 +223,13 @@ ALTER TABLE `migrations`
 -- AUTO_INCREMENT for table `surat_keluar`
 --
 ALTER TABLE `surat_keluar`
-  MODIFY `id_surat` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
+  MODIFY `id_surat` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=14;
 
 --
 -- AUTO_INCREMENT for table `surat_masuk`
 --
 ALTER TABLE `surat_masuk`
-  MODIFY `id_surat` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=15;
+  MODIFY `id_surat` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=17;
 
 --
 -- AUTO_INCREMENT for table `users`

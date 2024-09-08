@@ -49,23 +49,29 @@
                         <input type="text" class="form-control" id="perihal" name="perihal" value="<?= old('perihal') ?>" required>
                     </div>
                     <div class="form-group col-md-6">
-                        <label for="tanggal_terima">Tanggal Terima</label>
-                        <input type="date" class="form-control" id="tanggal_terima" name="tanggal_terima" value="<?= old('tanggal_terima') ?>" required>
-                    </div>
+                    <label for="tanggal_terima">Tanggal Terima</label>
+                    <input type="date" name="tanggal_terima" class="form-control" id="tanggal_terima" value="<?= date('Y-m-d') ?>" required>
+                </div>
                 </div>
                 <!-- Form Row 3 -->
                 <div class="form-group">
                     <label for="tujuan_surat">Tujuan Surat</label>
                     <select class="form-control" id="tujuan_surat" name="tujuan_surat" required>
                         <option value="">Pilih Tujuan</option>
+                        <option value="Satker" <?= old('tujuan_surat') === 'Satker' ? 'selected' : '' ?>>Satker BIRO I</option>
+                        <option value="Satker" <?= old('tujuan_surat') === 'Satker' ? 'selected' : '' ?>>Satker BIRO II</option>
+                        <option value="Satker" <?= old('tujuan_surat') === 'Satker' ? 'selected' : '' ?>>Satker BIRO III</option>
+                        <option value="Satker" <?= old('tujuan_surat') === 'Satker' ? 'selected' : '' ?>>Satker BIRO IV</option>
                         <option value="Satker" <?= old('tujuan_surat') === 'Satker' ? 'selected' : '' ?>>Satker LPPM</option>
                         <option value="Satker" <?= old('tujuan_surat') === 'Satker' ? 'selected' : '' ?>>Satker LPM</option>
+                        <option value="Satker" <?= old('tujuan_surat') === 'Satker' ? 'selected' : '' ?>>Satker Perpustakaan</option>
+                        <option value="Satker" <?= old('tujuan_surat') === 'Satker' ? 'selected' : '' ?>>Satker Laboratorium</option>
                         <option value="Satker" <?= old('tujuan_surat') === 'Satker' ? 'selected' : '' ?>>Satker Fakultas Teknik</option>
                         <option value="Satker" <?= old('tujuan_surat') === 'Satker' ? 'selected' : '' ?>>Satker Fakultas MIPA</option>
                         <option value="Satker" <?= old('tujuan_surat') === 'Satker' ? 'selected' : '' ?>>Satker Fakultas IKBIS</option>
                         <option value="Satker" <?= old('tujuan_surat') === 'Satker' ? 'selected' : '' ?>>Satker Fakultas Tarbiyah</option>
                         <option value="Satker" <?= old('tujuan_surat') === 'Satker' ? 'selected' : '' ?>>Satker Fakultas Ushuluddin</option>
-                        <option value="Satker" <?= old('tujuan_surat') === 'Satker' ? 'selected' : '' ?>>Satker Fakultas Ekonomi & ES</option>
+                        <option value="Satker" <?= old('tujuan_surat') === 'Satker' ? 'selected' : '' ?>>Satker Fakultas Ekonomi & EIS</option>
                         <option value="Pimpinan Pondok" <?= old('tujuan_surat') === 'Pimpinan Pondok' ? 'selected' : '' ?>>Pengurus Pondok</option>
                     </select>
                 </div>
