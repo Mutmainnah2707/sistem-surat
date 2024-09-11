@@ -4,41 +4,26 @@ namespace App\Database\Seeds;
 
 use CodeIgniter\Database\Seeder;
 use CodeIgniter\I18n\Time;
+use Myth\Auth\Models\UserModel;
+use Myth\Auth\Password;
 
 class UserSeeder extends Seeder
 {
     public function run()
     {
         $data = [
-            [
-                'name'           => 'Admin',
-                'username'       => 'admin',
-                'email'          => 'admin@example.com',
-                'password'       => password_hash('admin123', PASSWORD_BCRYPT),
-                'departement_id' => 1,
-                'created_at'     => Time::now(),
-                'updated_at'     => Time::now()
-            ],
-            [
-                'name'           => 'Satker',
-                'username'       => 'satker',
-                'email'          => 'satker@example.com',
-                'password'       => password_hash('satker123', PASSWORD_BCRYPT),
-                'departement_id' => 2,
-                'created_at'     => Time::now(),
-                'updated_at'     => Time::now()
-            ],
-            [
-                'name'           => 'Pengurus',
-                'username'       => 'pengurus',
-                'email'          => 'pengurus@example.com',
-                'password'       => password_hash('pengurus123', PASSWORD_BCRYPT),
-                'departement_id' => 3,
-                'created_at'     => Time::now(),
-                'updated_at'     => Time::now()
-            ]
+            'name'           => 'Admin',
+            'username'       => 'admin',
+            'email'          => 'admin@example.com',
+            'active'           => 1,
+            'password_hash'    => Password::hash('admin123')
         ];
 
-        $this->db->table('users')->insertBatch($data);
+        $userModel = new UserModel();
+        $userModel->save($data);
+
+        // Set role to admin
+        $authorize = service('authorization');
+        $authorize->addUserToGroup(1, 'admin');
     }
 }
