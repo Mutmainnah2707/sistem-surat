@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -16,6 +17,7 @@
         }
     </style>
 </head>
+
 <body>
 
     <div class="container">
@@ -31,53 +33,43 @@
                                     <div class="text-center">
                                         <h1 class="h4 text-gray-900 mb-4">Selamat Datang!</h1>
                                     </div>
-                                    <!-- Display Flash Messages -->
-                                    <?php if (session()->getFlashdata('success')) : ?>
-                                        <div class="alert alert-success">
-                                            <?= session()->getFlashdata('success') ?>
-                                        </div>
-                                    <?php endif; ?>
-                                    <?php if (session()->getFlashdata('error')) : ?>
-                                        <div class="alert alert-danger">
-                                            <?= session()->getFlashdata('error') ?>
-                                        </div>
-                                    <?php endif; ?>
 
-                                    <!-- Display Validation Errors -->
-                                    <?php if (isset($validation)) : ?>
-                                        <div class="alert alert-danger">
-                                            <?= $validation->listErrors() ?>
-                                        </div>
-                                    <?php endif; ?>
-                                    
-                                    <!-- Display Login Error -->
-                                    <?php if (isset($error)) : ?>
-                                        <div class="alert alert-danger">
-                                            <?= $error ?>
-                                        </div>
-                                    <?php endif; ?>
+                                    <?= view('Myth\Auth\Views\_message_block') ?>
 
-                                    <form class="user" action="<?= base_url('auth/authenticate') ?>" method="POST">
-                                        <input type="hidden" name="<?= csrf_token() ?>" value="<?= csrf_hash() ?>">
-                                        <div class="form-group">
-                                            <input type="email" class="form-control form-control-user shadow-sm"
-                                                id="exampleInputEmail" name="email"
-                                                placeholder="Masukkan Email..." value="<?= old('email') ?>">
-                                        </div>
+                                    <form class="user" action="<?= url_to('login') ?>" method="POST">
+                                        <?= csrf_field() ?>
+
+                                        <?php if ($config->validFields === ['email']): ?>
+                                            <div class="form-group">
+                                                <input type="email" class="form-control form-control-user shadow-sm <?= (session('errors.login')) ? 'is-invalid' : '' ?>" name="login" placeholder="<?= lang('Auth.email') ?>" value="<?= old('email') ?>">
+                                                <div class="invalid-feedback">
+                                                    <?= session('errors.login') ?>
+                                                </div>
+                                            </div>
+                                        <?php else: ?>
+                                            <div class="form-group">
+                                                <input type="text" class="form-control form-control-user shadow-sm <?= (session('errors.login')) ? 'is-invalid' : '' ?>" name="login" placeholder="<?= lang('Auth.emailOrUsername') ?>" value="<?= old('email') ?>">
+                                                <div class="invalid-feedback">
+                                                    <?= session('errors.login') ?>
+                                                </div>
+                                            </div>
+                                        <?php endif; ?>
+
                                         <div class="form-group position-relative">
-                                            <input type="password" class="form-control form-control-user shadow-sm"
-                                                id="exampleInputPassword" name="password" placeholder="Masukkan Password...">
+                                            <input type="password" class="form-control form-control-user shadow-sm <?= (session('errors.password')) ? 'is-invalid' : '' ?>" name="password" placeholder="<?= lang('Auth.password') ?>" id="password">
+                                            <div class="invalid-feedback">
+                                                <?= session('errors.password') ?>
+                                            </div>
+
                                             <span class="show-password-btn" onclick="togglePassword()">
                                                 <i id="password-eye" class="fa fa-eye"></i>
                                             </span>
                                         </div>
-                                        <button type="submit" class="btn btn-login btn-user btn-block">Login</button>
+
+                                        <button type="submit" class="btn btn-login btn-user btn-block"><?= lang('Auth.loginAction') ?></button>
                                         <hr>
-                                        <!-- Uncomment this if you have registration page -->
-                                        <!-- <div class="text-center">
-                                            <a class="small" href="<?= base_url('register') ?>">Belum punya akun? klik disini!</a>
-                                        </div> -->
                                     </form>
+
                                 </div>
                             </div>
                             <div class="col-lg-6 d-none d-lg-block bg-login-image"></div>
@@ -93,7 +85,7 @@
     <script src="<?= base_url('assetAdmin/js/sb-admin-2.min.js') ?>"></script>
     <script>
         function togglePassword() {
-            var passwordInput = document.getElementById('exampleInputPassword');
+            var passwordInput = document.getElementById('password');
             var passwordEye = document.getElementById('password-eye');
             if (passwordInput.type === 'password') {
                 passwordInput.type = 'text';
@@ -107,4 +99,5 @@
         }
     </script>
 </body>
+
 </html>
