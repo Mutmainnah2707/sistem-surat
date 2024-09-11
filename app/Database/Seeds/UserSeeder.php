@@ -3,6 +3,7 @@
 namespace App\Database\Seeds;
 
 use CodeIgniter\Database\Seeder;
+use CodeIgniter\I18n\Time;
 
 class UserSeeder extends Seeder
 {
@@ -10,23 +11,34 @@ class UserSeeder extends Seeder
     {
         $data = [
             [
-                'id' => 1,
-                'nama' => 'John Doe',
-                'email' => 'john.doe@example.com',
-                'password' => password_hash('password123', PASSWORD_BCRYPT),  // Password terenkripsi
-                'level' => 'admin',
+                'name'           => 'Admin',
+                'username'       => 'admin',
+                'email'          => 'admin@example.com',
+                'password'       => password_hash('admin123', PASSWORD_BCRYPT),
+                'departement_id' => 1,
+                'created_at'     => Time::now(),
+                'updated_at'     => Time::now()
             ],
             [
-                'id' => 2,
-                'nama' => 'Jane Smith',
-                'email' => 'jane.smith@example.com',
-                'password' => password_hash('password123', PASSWORD_BCRYPT),  // Password terenkripsi
-                'level' => 'user',
+                'name'           => 'Satker',
+                'username'       => 'satker',
+                'email'          => 'satker@example.com',
+                'password'       => password_hash('satker123', PASSWORD_BCRYPT),
+                'departement_id' => 2,
+                'created_at'     => Time::now(),
+                'updated_at'     => Time::now()
             ],
-            // Tambahkan lebih banyak data sesuai kebutuhan
+            [
+                'name'           => 'Pengurus',
+                'username'       => 'pengurus',
+                'email'          => 'pengurus@example.com',
+                'password'       => password_hash('pengurus123', PASSWORD_BCRYPT),
+                'departement_id' => 3,
+                'created_at'     => Time::now(),
+                'updated_at'     => Time::now()
+            ]
         ];
 
-        // Insert data into the users table
         $this->db->table('users')->insertBatch($data);
     }
 }
