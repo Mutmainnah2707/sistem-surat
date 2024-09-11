@@ -4,17 +4,15 @@ namespace App\Models;
 
 use CodeIgniter\Model;
 
-class UserModel extends Model
+class NotificationModel extends Model
 {
-    protected $table = 'users';
+    protected $table = 'notifications';
     protected $primaryKey = 'id';
 
     protected $allowedFields = [
-        'name',
-        'username',
-        'email',
-        'password',
-        'departement_id'
+        'user_id',
+        'message',
+        'is_read'
     ];
 
     protected $useTimestamps = true;

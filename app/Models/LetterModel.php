@@ -4,17 +4,21 @@ namespace App\Models;
 
 use CodeIgniter\Model;
 
-class UserModel extends Model
+class LetterModel extends Model
 {
-    protected $table = 'users';
+    protected $table = 'letters';
     protected $primaryKey = 'id';
 
     protected $allowedFields = [
-        'name',
-        'username',
-        'email',
-        'password',
-        'departement_id'
+        'user_id',
+        'letter_from',
+        'received_date',
+        'letter_date',
+        'letter_number',
+        'subject',
+        'description',
+        'attachment',
+        'status'
     ];
 
     protected $useTimestamps = true;

@@ -4,17 +4,14 @@ namespace App\Models;
 
 use CodeIgniter\Model;
 
-class UserModel extends Model
+class DepartementModel extends Model
 {
-    protected $table = 'users';
+    protected $table = 'departements';
     protected $primaryKey = 'id';
 
     protected $allowedFields = [
         'name',
-        'username',
-        'email',
-        'password',
-        'departement_id'
+        'description'
     ];
 
     protected $useTimestamps = true;
