@@ -20,7 +20,7 @@ class CreateDispositionsTable extends Migration
                 'constraint'     => 11,
                 'unsigned'       => true
             ],
-            'user_id_receipient' => [ // Penerima disposisi
+            'user_id_recipient' => [ // Penerima disposisi
                 'type'           => 'INT',
                 'constraint'     => 11,
                 'unsigned'       => true
@@ -44,7 +44,7 @@ class CreateDispositionsTable extends Migration
         ]);
         $this->forge->addKey('id', true);
         $this->forge->addForeignKey('letter_recipient_id', 'letter_recipients', 'id', 'CASCADE', 'CASCADE');
-        $this->forge->addForeignKey('user_id_receipient', 'users', 'id', 'CASCADE', 'CASCADE');
+        $this->forge->addForeignKey('user_id_recipient', 'users', 'id', 'CASCADE', 'CASCADE');
         $this->forge->createTable('dispositions');
     }
 

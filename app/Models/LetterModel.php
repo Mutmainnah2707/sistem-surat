@@ -16,8 +16,7 @@ class LetterModel extends Model
         'letter_date',
         'letter_number',
         'subject',
-        'description',
-        'attachment',
+        'letter_file',
         'status'
     ];
 

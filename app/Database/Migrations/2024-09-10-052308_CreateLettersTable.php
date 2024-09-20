@@ -40,16 +40,12 @@ class CreateLettersTable extends Migration
                 'type'           => 'VARCHAR',
                 'constraint'     => 255
             ],
-            'description' => [
-                'type'           => 'TEXT'
-            ],
-            'attachment' => [
+            'letter_file' => [
                 'type'           => 'TEXT'
             ],
             'status' => [
                 'type'           => 'ENUM',
-                'constraint'     => ['pending', 'processed'],
-                'default'        => 'pending'
+                'constraint'     => ['Draft', 'Final']
             ],
             'created_at' => [
                 'type'           => 'DATETIME',

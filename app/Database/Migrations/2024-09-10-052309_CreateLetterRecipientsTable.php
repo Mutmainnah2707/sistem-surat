@@ -25,6 +25,11 @@ class CreateLetterRecipientsTable extends Migration
                 'constraint'     => 11,
                 'unsigned'       => true
             ],
+            'is_read' => [
+                'type'           => 'TINYINT',
+                'constraint'     => 1,
+                'default'        => 0
+            ],
             'received_date' => [
                 'type'           => 'DATETIME'
             ]
