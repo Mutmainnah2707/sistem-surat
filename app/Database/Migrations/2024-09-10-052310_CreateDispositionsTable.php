@@ -15,12 +15,17 @@ class CreateDispositionsTable extends Migration
                 'unsigned'       => true,
                 'auto_increment' => true
             ],
-            'letter_recipient_id' => [
+            'letter_id' => [
                 'type'           => 'INT',
                 'constraint'     => 11,
                 'unsigned'       => true
             ],
-            'user_id_receipient' => [ // Penerima disposisi
+            'sender_id' => [ // Pengirim disposisi
+                'type'           => 'INT',
+                'constraint'     => 11,
+                'unsigned'       => true
+            ],
+            'recipient_id' => [ // Penerima disposisi
                 'type'           => 'INT',
                 'constraint'     => 11,
                 'unsigned'       => true
@@ -30,8 +35,8 @@ class CreateDispositionsTable extends Migration
             ],
             'status' => [
                 'type'           => 'ENUM',
-                'constraint'     => ['pending', 'completed'],
-                'default'        => 'pending'
+                'constraint'     => ['Pending', 'Completed'],
+                'default'        => 'Pending'
             ],
             'created_at' => [
                 'type'           => 'DATETIME',
@@ -43,8 +48,9 @@ class CreateDispositionsTable extends Migration
             ]
         ]);
         $this->forge->addKey('id', true);
-        $this->forge->addForeignKey('letter_recipient_id', 'letter_recipients', 'id', 'CASCADE', 'CASCADE');
-        $this->forge->addForeignKey('user_id_receipient', 'users', 'id', 'CASCADE', 'CASCADE');
+        $this->forge->addForeignKey('letter_id', 'letters', 'id', 'CASCADE', 'CASCADE');
+        $this->forge->addForeignKey('sender_id', 'users', 'id', 'CASCADE', 'CASCADE');
+        $this->forge->addForeignKey('recipient_id', 'users', 'id', 'CASCADE', 'CASCADE');
         $this->forge->createTable('dispositions');
     }
 

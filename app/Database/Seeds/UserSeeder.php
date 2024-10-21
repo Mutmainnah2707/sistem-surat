@@ -3,7 +3,6 @@
 namespace App\Database\Seeds;
 
 use CodeIgniter\Database\Seeder;
-use CodeIgniter\I18n\Time;
 use Myth\Auth\Models\UserModel;
 use Myth\Auth\Password;
 
@@ -12,18 +11,43 @@ class UserSeeder extends Seeder
     public function run()
     {
         $data = [
-            'name'           => 'Admin',
-            'username'       => 'admin',
-            'email'          => 'admin@example.com',
-            'active'           => 1,
-            'password_hash'    => Password::hash('admin123')
+            [
+                'name'          => 'Kabir',
+                'email'         => 'admin@example.com',
+                'active'        => 1,
+                'password_hash' => Password::hash('admin123')
+            ],
+            [
+                'name'          => 'Rektor',
+                'email'         => 'pimpinan@example.com',
+                'active'        => 1,
+                'password_hash' => Password::hash('pimpinan123')
+            ],
+            [
+                'name'          => 'Fakultas Teknik',
+                'email'         => 'satker@example.com',
+                'active'        => 1,
+                'password_hash' => Password::hash('satker123')
+            ],
+            [
+                'name'          => 'Indah Permata',
+                'email'         => 'penpon@example.com',
+                'active'        => 1,
+                'password_hash' => Password::hash('penpon123')
+            ],
         ];
 
         $userModel = new UserModel();
-        $userModel->save($data);
 
-        // Set role to admin
+        foreach ($data as $account) {
+            $userModel->save($account);
+        }
+
+        // Set user role
         $authorize = service('authorization');
         $authorize->addUserToGroup(1, 'admin');
+        $authorize->addUserToGroup(2, 'pimpinan');
+        $authorize->addUserToGroup(3, 'satker');
+        $authorize->addUserToGroup(4, 'penpon');
     }
 }

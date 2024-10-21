@@ -8,7 +8,8 @@ class BaseSeeder extends Seeder
 {
     public function run()
     {
-        $this->call('RoleSeeder');
+        $this->call('GroupSeeder');
         $this->call('UserSeeder');
+        // $this->call('LetterSeeder');
     }
 }

@@ -10,8 +10,9 @@ class DispositionModel extends Model
     protected $primaryKey = 'id';
 
     protected $allowedFields = [
-        'letter_recipient_id',
-        'user_id_receipient',
+        'letter_id',
+        'sender_id',
+        'recipient_id',
         'instruction',
         'status'
     ];

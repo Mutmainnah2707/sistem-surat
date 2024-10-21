@@ -12,6 +12,7 @@ class LetterRecipientModel extends Model
     protected $allowedFields = [
         'letter_id',
         'user_id',
+        'is_read',
         'received_date'
     ];
 }
