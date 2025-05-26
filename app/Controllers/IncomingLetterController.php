@@ -9,12 +9,17 @@ class IncomingLetterController extends BaseController
     public function index()
     {
         // Get data surat masuk berdasarkan id pengguna yang sedang login
-        $this->data['incomingLetters'] = $this->letterRecipientModel
-            ->select('*, letter_recipients.received_date, receivers.name as receiver')
+        $incomingLetters = $this->letterRecipientModel
+            ->select('*, letter_recipients.received_date')
             ->join('letters', 'letters.id = letter_recipients.letter_id')
-            ->join('users as receivers', 'receivers.id = letter_recipients.user_id')
             ->where('letter_recipients.user_id', user()->id)
             ->get()->getResultArray();
+
+        // Get data disposisi berdasarkan id penerima disposisi (pengguna yang sedang login)
+        $dispositionLetters = $this->dispositionModel->getDispositionLetters(user()->id);
+
+        // Gabungkan kedua hasil query menjadi satu array
+        $this->data['incomingLetters'] = array_merge($incomingLetters, $dispositionLetters);
 
         return view('letter/incoming/index', $this->data);
     }
@@ -111,8 +116,19 @@ class IncomingLetterController extends BaseController
             ->where('user_id', user()->id)
             ->first();
 
-        // Ubah status belum dibaca menjadi sudah dibaca
-        $this->letterRecipientModel->update($data['letter_recipient']['id'], ['is_read' => 1]);
+        if (isset($data['letter_recipient']) && $data['letter_recipient']['is_read'] == 0) {
+            // Ubah status belum dibaca menjadi sudah dibaca
+            $this->letterRecipientModel->update($data['letter_recipient']['id'], ['is_read' => 1]);
+        }
+
+        // Get data disposisi berdasarkan recipient_id
+        $this->data['disposition'] = $this->dispositionModel
+            ->select('*, dispositions.status, senders.name as sender, recipients.name as recipient')
+            ->join('letters', 'letters.id = dispositions.letter_id')
+            ->join('users as senders', 'senders.id = dispositions.sender_id')
+            ->join('users as recipients', 'recipients.id = dispositions.recipient_id')
+            ->where('dispositions.recipient_id', user()->id)
+            ->first();
 
         return view('letter/incoming/show', $this->data);
     }

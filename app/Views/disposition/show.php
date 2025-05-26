@@ -17,13 +17,42 @@ Detail Surat Masuk
             <a href="<?= base_url('download/' . $surat_masuk['file_surat']); ?>" download class="btn btn-primary">Download Surat</a>
         <?php endif ?>
 
-        <div class="row">
+        <div class="row mt-2">
             <div class="col-lg-6 mb-0">
-                <p class="mb-0">Pengirim Disposisi: <?= $disposition['sender'] ?></p>
-                <p class="mb-0">Penerima Disposisi: <?= $disposition['recipient'] ?></p>
-                <p class="mb-0">Instruksi: <?= $disposition['instruction'] ?></p>
+                <table class="table table-bordered">
+                    <tr>
+                        <td>Diteruskan kepada</td>
+                        <td>: <?= $disposition['sender'] ?></td>
+                    </tr>
+                    <tr>
+                        <td>Disposisi</td>
+                        <td>: <?= $disposition['recipient'] ?></td>
+                    </tr>
+                    <tr>
+                        <td>Instruksi</td>
+                        <td>: <?= $disposition['instruction'] ?></td>
+                    </tr>
+                </table>
+            </div>
+            <div class="col-lg-6 mb-0">
+                <table class="table table-bordered">
+                    <tr>
+                        <td>Diteruskan kepada</td>
+                        <td>: <?= $disposition['sender'] ?></td>
+                    </tr>
+                    <tr>
+                        <td>Disposisi</td>
+                        <td>: <?= $disposition['recipient'] ?></td>
+                    </tr>
+                    <tr>
+                        <td>Instruksi</td>
+                        <td>: <?= $disposition['instruction'] ?></td>
+                    </tr>
+                </table>
+            </div>
+            <div>
                 <?php if (in_groups('admin') && $disposition['status'] === 'Pending'): ?>
-                    <a href="<?= site_url('disposisi/forward/' . $disposition['id']) ?>" class="btn btn-success">Teruskan</a>
+                    <a href="<?= site_url('disposisi/forward/' . $disposition['id']) ?>" class="btn btn-success">Teruskan Disposisi</a>
                 <?php endif ?>
             </div>
         </div>

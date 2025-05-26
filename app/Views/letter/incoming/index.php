@@ -27,7 +27,6 @@ Surat Masuk
                         <th>Perihal</th>
                         <th>Tanggal Surat</th>
                         <th>Tanggal Terima</th>
-                        <th>Tujuan Surat</th>
                         <th>Actions</th>
                     </tr>
                 </thead>
@@ -42,7 +41,6 @@ Surat Masuk
                                 <td><?= esc($letter['subject']) ?></td>
                                 <td><?= esc(date('d-m-Y', strtotime($letter['letter_date']))) ?></td>
                                 <td><?= esc(date('d-m-Y', strtotime($letter['received_date']))) ?></td>
-                                <td><?= esc($letter['receiver']) ?></td>
                                 <td>
                                     <div class="d-flex">
                                         <a href="<?= site_url('surat-masuk/show/' . $letter['letter_id']) ?>" class="btn btn-info btn-sm mr-1">Show</a>
